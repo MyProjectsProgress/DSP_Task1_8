@@ -145,7 +145,7 @@ def Sampling():
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
 
-    SNR = st.slider(label='SNR', min_value=0.0, max_value=1.0, value=0.0, step=0.01)
+    SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=1.0)
 
     signal_power = total_signals **2                                    # Generating the signal power
     
@@ -156,7 +156,7 @@ def add_noise():
     else:
         noise_power = signal_power_avg / SNR
     mean_noise = 0
-    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
     noise_signal = total_signals + noise
 
     return noise_signal
