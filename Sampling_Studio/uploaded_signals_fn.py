@@ -95,7 +95,6 @@ def add_signal(df):
     col2.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------adding_sin_waves
-
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
 
     total_signals = df_y_axis
@@ -149,7 +148,6 @@ def add_noise():
 
 
 # ------------------------------------------------------------------------------------Data Frame Sampling
-
 def signal_sampling(df):
 
     list_of_columns = df.columns
@@ -162,7 +160,7 @@ def signal_sampling(df):
         df_y_axis = list(df[list_of_columns[1]])
     df_x_axis = list(df[list_of_columns[0]])
 
-    begin_time = df[list_of_columns[0]].iat[0] # begin_time
+    begin_time = df[list_of_columns[0]].iat[0] # begin time
     end_time = df[list_of_columns[0]].iloc[-1] # end time 
 
     time_range = abs(begin_time - end_time)
@@ -172,7 +170,7 @@ def signal_sampling(df):
     sample_rate = int((len(df_x_axis)/time_range)/(sample_freq)) #hakhod sample kol 150 no2ta msln 900pt-- 6 sec 
 
     if sample_rate == 0:
-        sample_rate = 1 #to avoid error of sample_rate approximation to 0
+        sample_rate = 1                     #to avoid error of sample_rate approximation to 0
 
     sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
     sampled_amplitude = df_y_axis[::sample_rate] 

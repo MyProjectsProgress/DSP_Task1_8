@@ -4,12 +4,14 @@ import pandas as pd
 import uploaded_signals_fn as USF
 import generated_signal_fn as GSF
 
-# ------------------------------------------------------------------------------------Front end 
+# ------------------------------------------------------------------------------------Front End 
 # with open("design.css") as source_ds:
 #     st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
+st.set_page_config(layout="wide")
 col11,col22,col33 = st.columns([1,1,1])
+# ------------------------------------------------------------------------------------Recieving File
 dataset = st.sidebar.file_uploader("Sampling Studio", type = ['csv'])
-# ------------------------------------------------------------------------------------ User Options
+# ------------------------------------------------------------------------------------User Options
 options = st.sidebar.radio('Tools', options=['Uploaded Signal Studio','Signal Generation Studio'])
 
 # ------------------------------------------------------------------------------------Uploaded Signal Studio
@@ -27,9 +29,8 @@ def uploaded_signal_studio():
 
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
-    GSF.Sampling()
-
-    GSF.add_signal()
+    GSF.sampling()
+    GSF.main_add_signal()
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':

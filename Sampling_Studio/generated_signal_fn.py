@@ -1,4 +1,4 @@
-# ------------------------------------------------------------------------------------Importing liberaries
+# ------------------------------------------------------------------------------------Importing Liberaries
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil
 import matplotlib.pyplot as plt
@@ -38,7 +38,7 @@ class Signal:
         self.frequency = frequency
 
 # ------------------------------------------------------------------------------------Adding Signals
-def add_signal():
+def main_add_signal():
     col1,col2 = st.columns([1,2])
     with col1:
         frequency = col1.slider('Choose Frequency', min_value=1, max_value=50, step=1, key='frequency Box') 
@@ -46,7 +46,7 @@ def add_signal():
 
         add_button = col1.button('Add Signal', key="Save Button") 
         if add_button:
-            adding_signals(frequency,amplitude) 
+            summing_signals(frequency,amplitude) 
         
         signals_menu = []
         splitting_menu_contents = [] 
@@ -62,11 +62,11 @@ def add_signal():
 
         remove_button = col1.button('Remove Signal', key="Remove Button")
         if remove_button and len(list_of_objects)>0: 
-            removing_signal(removed_signal_freq,removed_signal_amp) 
+            removing_signals(removed_signal_freq,removed_signal_amp) 
     with col2:
         general_signal_plotting(initial_time,total_signals)
 # ------------------------------------------------------------------------------------Adding Signals
-def adding_signals(frequency,amplitude):                                              
+def summing_signals(frequency,amplitude):                                              
     global total_signals                                                              
     total_signals = zeros(1000)                                                       
     list_of_objects.append(Signal(frequency=frequency, amplitude=amplitude))          
@@ -77,7 +77,7 @@ def adding_signals(frequency,amplitude):
         total_signals += signal_y_axis
 
 # ------------------------------------------------------------------------------------Removing Added Signals
-def removing_signal(removed_freq,removed_amp):
+def removing_signals(removed_freq,removed_amp):
     global total_signals 
     total_signals = zeros(1000)
 
@@ -93,7 +93,7 @@ def removing_signal(removed_freq,removed_amp):
         total_signals += signal_y_axis
 
 # ------------------------------------------------------------------------------------Sampling Signals
-def Sampling():
+def sampling():
 
     amplitude = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
     signal_frequency = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
@@ -137,9 +137,9 @@ def add_noise():
 
     SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=1.0)
 
-    signal_power = total_signals **2                                    # Generating the signal power
+    signal_power = total_signals **2      # Generating the signal power
     
-    signal_power_avg = mean(signal_power)                     # mean of signal power
+    signal_power_avg = mean(signal_power) # mean of signal power
 
     if (SNR==0):
         noise_power = signal_power_avg / 0.00001
@@ -150,8 +150,3 @@ def add_noise():
     noise_signal = total_signals + noise
 
     return noise_signal
-
-    # fig, axs = plt.subplots()
-    # fig.set_size_inches(6, 4)
-    # axs.plot(x_axis, noise_signal)
-    # st.plotly_chart(fig)
