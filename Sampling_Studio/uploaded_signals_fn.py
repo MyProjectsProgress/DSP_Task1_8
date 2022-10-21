@@ -31,11 +31,11 @@ def general_signal_plotting(x_axis,y_axis):
     axs.plot(x_axis, y_axis)
     st.plotly_chart(fig,use_container_width=True)
 
-# ------------------------------------------------------------------------------------Sampling Signal Plotting 
-def sampling_signal_plotting(df,x_sampled_axis,y_sampled_axis):
+# ------------------------------------------------------------------------------------General Plotting Signal
+def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
 
     list_of_columns = df.columns
-    df_y_axis = df[list_of_columns[1]]
+    # df_y_axis = df[list_of_columns[1]]
     df_x_axis = df[list_of_columns[0]]
 
     fig, axs = plt.subplots()
@@ -46,8 +46,8 @@ def sampling_signal_plotting(df,x_sampled_axis,y_sampled_axis):
 
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
-
-    col1,col2 = st.columns([1,1])
+    global total_signals
+    col1,col2 = st.columns([1,2])
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
@@ -89,6 +89,8 @@ def add_signal(df):
 
     fig, axs = plt.subplots()
     fig.set_size_inches(8, 4)
+    
+
     axs.plot(corresponding_x_axis, total_signals)
     col2.plotly_chart(fig,use_container_width=True)
 
@@ -127,36 +129,37 @@ def removing_signal(df,removed_freq,removed_amp):
     return total_signals
 
 # ------------------------------------------------------------------------------------Adding Noise Signal
+def add_noise():
 
-def add_noise(df):
+    SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=0.1)
 
-    list_of_columns = df.columns
-    df_y_axis = df[list_of_columns[1]]
-    df_x_axis = df[list_of_columns[0]]
+    signal_power = total_signals **2                                    # Generating the signal power
     
-
-    SNR = st.slider(label='SNR', min_value=0.0, max_value=1.0, value=1.0, step=0.01)
-
-    signal_power = df_y_axis **2                                # Generating the signal power
-
-    signal_power_avg = mean(signal_power)                       # mean of signal power
+    signal_power_avg = mean(signal_power)                     # mean of signal power
 
     if (SNR==0):
         noise_power = signal_power_avg / 0.00001
     else:
         noise_power = signal_power_avg / SNR
     mean_noise = 0
-    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(df_y_axis))
-    noise_signal = df_y_axis + noise
-    
-    general_signal_plotting(df_x_axis,noise_signal)
+    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise_signal = total_signals + noise
+
+    return noise_signal
+
 
 # ------------------------------------------------------------------------------------Data Frame Sampling
 
 def signal_sampling(df):
 
     list_of_columns = df.columns
-    df_y_axis = list(df[list_of_columns[1]])
+    global noise
+    noise = st.checkbox('Noise')
+    if noise:
+        df_y_axis=add_noise()
+        df_y_axis=list(df_y_axis)
+    else:
+        df_y_axis = list(df[list_of_columns[1]])
     df_x_axis = list(df[list_of_columns[0]])
 
     begin_time = df[list_of_columns[0]].iat[0] # begin_time
@@ -174,7 +177,7 @@ def signal_sampling(df):
     sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
     sampled_amplitude = df_y_axis[::sample_rate] 
     
-    return sampled_amplitude, sampled_time
+    return sampled_amplitude, sampled_time , df_y_axis
 
 # ------------------------------------------------------------------------------------Data Frame Reconstructing
 

@@ -17,20 +17,12 @@ def uploaded_signal_studio():
     if dataset is not None:
         df = pd.read_csv(dataset)
         df_x_axis,df_y_axis = USF.get_data_frame(df)
-        add_noise_button = st.checkbox("Add Noise")
-        if add_noise_button:
-            USF.add_noise(df)
-        else:
-            pass
+        USF.general_signal_plotting(df_x_axis,df_y_axis)
         USF.add_signal(df)
-        col1,col2 = st.columns([1,1])
-
-        sampled_amplitude, sampled_time = USF.signal_sampling(df)
+        sampled_amplitude, sampled_time ,df_y_axis = USF.signal_sampling(df)
         time_points, reconstructed_signal = USF.signal_reconstructing(df, sampled_time, sampled_amplitude)
-        with col1:
-         USF.sampling_signal_plotting(df,sampled_time,sampled_amplitude)
-        with col2:
-         USF.general_signal_plotting(time_points, reconstructed_signal)
+        USF.sampling_signal_plotting(df,df_y_axis,sampled_time,sampled_amplitude)
+        USF.general_signal_plotting(time_points, reconstructed_signal)
         st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
 
 # ------------------------------------------------------------------------------------Generated Signal Studio
