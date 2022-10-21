@@ -4,9 +4,8 @@ from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,
 import matplotlib.pyplot as plt
 import pandas as pd
 from random import randint
-from scipy import interpolation
-import scipy
-
+from scipy import interpolate
+from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 
 # ------------------------------------------------------------------------------------Sin Signal Viewer Function For Home Function
 def sin_signal_viewer():
@@ -107,7 +106,8 @@ def Sampling():
     showing_signal          = col1.checkbox('Show Orginal Signal on Graph')
     interpolation_check_box = col2.checkbox('Interpolation')
 
-    sampled_time_axis      = arange(0, 8, sampling_period)                    #time steps
+    sampled_time_axis      = arange(0, 8, sampling_period)     #time steps
+
     sampled_amplitude_axis = amplitude * sin(2*pi*signal_frequency*sampled_time_axis) 
 
     time_axis      = linspace(0, 8, 1000)
@@ -119,10 +119,11 @@ def Sampling():
     if showing_signal:
         axs.plot(time_axis, amplitude_axis, color='red', linewidth=3, linestyle='-')
     elif interpolation_check_box :
-        scinc_finction = scipy.interpolate.interp1d(time_axis,amplitude_axis)
-        y_interpolate = scinc_finction(sampled_time_axis)
-        axs.plot(sampled_time_axis, y_interpolate,color='green',linestyle='-')
-
+        time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
+        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = sampled_amplitude_axis * sinc(K)
+        reconstructed_signal = sum(final_matrix, axis=1)
+        axs.plot(time_axis,reconstructed_signal,color='green',linestyle='-')
     axs.plot(sampled_time_axis, sampled_amplitude_axis,color="blue",linestyle='', marker='o' ,markersize=3 )
     axs.axhline(0, color='black', linestyle='-', linewidth=0)
     col1.plotly_chart(fig2)
