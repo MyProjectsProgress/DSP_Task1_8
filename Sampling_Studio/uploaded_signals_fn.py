@@ -27,9 +27,9 @@ class Signal:
 def general_signal_plotting(x_axis,y_axis):
 
     fig, axs = plt.subplots()
-    fig.set_size_inches(11, 4)
+    fig.set_size_inches(8, 4)
     axs.plot(x_axis, y_axis)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
 def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
@@ -39,10 +39,10 @@ def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
     df_x_axis = df[list_of_columns[0]]
 
     fig, axs = plt.subplots()
-    fig.set_size_inches(11, 4)
+    fig.set_size_inches(8, 4)
     axs.plot(df_x_axis, df_y_axis)
     axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
-    st.plotly_chart(fig)
+    st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
@@ -51,7 +51,7 @@ def add_signal(df):
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
-    corresponding_x_axis = linspace(-1,1, len(df_y_axis))
+    corresponding_x_axis = linspace(-3,3, len(df_y_axis))
 
     if len(list_of_objects)==0: 
         total_signals = df_y_axis
@@ -92,7 +92,7 @@ def add_signal(df):
     
 
     axs.plot(corresponding_x_axis, total_signals)
-    col2.plotly_chart(fig)
+    col2.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------adding_sin_waves
 

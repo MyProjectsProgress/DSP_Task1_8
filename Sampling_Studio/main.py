@@ -5,8 +5,8 @@ import uploaded_signals_fn as USF
 import generated_signal_fn as GSF
 
 # ------------------------------------------------------------------------------------Front end 
-with open("design.css") as source_ds:
-    st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
+# with open("design.css") as source_ds:
+#     st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
 col11,col22,col33 = st.columns([1,1,1])
 dataset = st.sidebar.file_uploader("Sampling Studio", type = ['csv'])
 # ------------------------------------------------------------------------------------ User Options
@@ -27,9 +27,9 @@ def uploaded_signal_studio():
 
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
-    GSF.sin_signal_viewer()
-    GSF.add_signal()
     GSF.Sampling()
+
+    GSF.add_signal()
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':

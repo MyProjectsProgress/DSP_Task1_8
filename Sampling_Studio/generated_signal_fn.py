@@ -8,23 +8,23 @@ from scipy import interpolate
 from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 
 # ------------------------------------------------------------------------------------Sin Signal Viewer Function For Home Function
-def sin_signal_viewer():
-    time = linspace(-1, 1, 1000)
-    frequency = st.slider(label='Frequency', min_value=1, max_value=150, step=1)
-    amplitude = st.slider(label='Amplitude', min_value=1, max_value=150, step=1)
-    sin_signal = amplitude*sin(2*pi*frequency *time) 
+# def sin_signal_viewer():
+#     time = linspace(-1, 1, 1000)
+#     frequency = st.slider(label='Frequency', min_value=1, max_value=150, step=1)
+#     amplitude = st.slider(label='Amplitude', min_value=1, max_value=150, step=1)
+#     sin_signal = amplitude*sin(2*pi*frequency *time) 
 
-    fig, axs = plt.subplots()
-    fig.set_size_inches(11, 4)
-    axs.plot(time, sin_signal)
-    st.plotly_chart(fig)
+#     fig, axs = plt.subplots()
+#     fig.set_size_inches(11, 4)
+#     axs.plot(time, sin_signal)
+#     st.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
 def general_signal_plotting(x_axis,y_axis):
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 4)
     axs.plot(x_axis, y_axis)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
@@ -40,34 +40,30 @@ class Signal:
 # ------------------------------------------------------------------------------------Adding Signals
 def add_signal():
     col1,col2 = st.columns([1,2])
-    frequency = col1.slider('Choose Frequency', min_value=1, max_value=50, step=1, key='frequency Box') 
-    amplitude = col1.slider('Choose Amplitude', min_value=1, max_value=50, step=1, key='Amplitude Box') 
+    with col1:
+        frequency = col1.slider('Choose Frequency', min_value=1, max_value=50, step=1, key='frequency Box') 
+        amplitude = col1.slider('Choose Amplitude', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
-    add_button = col1.button('Add Signal', key="Save Button") 
-    if add_button:
-        adding_signals(frequency,amplitude) 
-    
-    signals_menu = []
-    splitting_menu_contents = [] 
-    for object in list_of_objects: 
-        signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}')
-    
-    signals_names = col1.selectbox('Your Signals',signals_menu) 
-
-    splitting_menu_contents = str(signals_names).split(' ') 
-    if len(splitting_menu_contents)==4: 
-        removed_signal_freq = float(splitting_menu_contents[1]) 
-        removed_signal_amp = float(splitting_menu_contents[3])
-
-    remove_button = col1.button('Remove Signal', key="Remove Button")
-    if remove_button and len(list_of_objects)>0: 
-        removing_signal(removed_signal_freq,removed_signal_amp)
+        add_button = col1.button('Add Signal', key="Save Button") 
+        if add_button:
+            adding_signals(frequency,amplitude) 
         
-    noise = col1.checkbox('Noise')
-    if noise:
-        noise_signal=add_noise()
-        general_signal_plotting(initial_time,noise_signal)
-    else:
+        signals_menu = []
+        splitting_menu_contents = [] 
+        for object in list_of_objects: 
+            signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}')
+        
+        signals_names = col1.selectbox('Your Signals',signals_menu) 
+
+        splitting_menu_contents = str(signals_names).split(' ') 
+        if len(splitting_menu_contents)==4: 
+            removed_signal_freq = float(splitting_menu_contents[1]) 
+            removed_signal_amp = float(splitting_menu_contents[3])
+
+        remove_button = col1.button('Remove Signal', key="Remove Button")
+        if remove_button and len(list_of_objects)>0: 
+            removing_signal(removed_signal_freq,removed_signal_amp) 
+    with col2:
         general_signal_plotting(initial_time,total_signals)
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
@@ -130,17 +126,11 @@ def Sampling():
         axs.plot(time_axis,reconstructed_signal,color='green',linestyle='-')
     axs.plot(sampled_time_axis, sampled_amplitude_axis,color="blue",linestyle='', marker='o' ,markersize=3 )
     axs.axhline(0, color='black', linestyle='-', linewidth=0)
-    col1.plotly_chart(fig2)
-
-    # Use the parameters above for some computation
-    x = linspace(0, 8, 1000)
-    y1 = amplitude*sin(2*pi*signal_frequency * x)
-
-    # Let's plot the results of the above computations
+    col1.plotly_chart(fig2,use_container_width=True)
     fig, axs = plt.subplots()
     fig.set_size_inches(6, 4)
-    axs.plot(x, y1)
-    col2.plotly_chart(fig)
+    axs.plot(time_axis, amplitude_axis)
+    col2.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
