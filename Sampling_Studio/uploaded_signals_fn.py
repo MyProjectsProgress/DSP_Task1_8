@@ -142,7 +142,7 @@ def add_noise():
     else:
         noise_power = signal_power_avg / SNR
     mean_noise = 0
-    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
     noise_signal = total_signals + noise
 
     return noise_signal
