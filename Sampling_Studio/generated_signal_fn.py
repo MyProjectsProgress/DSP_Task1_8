@@ -61,10 +61,14 @@ def add_signal():
 
     remove_button = col1.button('Remove Signal', key="Remove Button")
     if remove_button and len(list_of_objects)>0: 
-        removing_signal(removed_signal_freq,removed_signal_amp) 
-
-    general_signal_plotting(initial_time,total_signals) 
-
+        removing_signal(removed_signal_freq,removed_signal_amp)
+        
+    noise = col1.checkbox('Noise')
+    if noise:
+        noise_signal=add_noise()
+        general_signal_plotting(initial_time,noise_signal)
+    else:
+        general_signal_plotting(initial_time,total_signals)
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
     global total_signals                                                              
@@ -139,3 +143,25 @@ def Sampling():
     col2.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------Removing Added Signals
+def add_noise():
+
+    SNR = st.slider(label='SNR', min_value=0.0, max_value=1.0, value=0.0, step=0.01)
+
+    signal_power = total_signals **2                                    # Generating the signal power
+    
+    signal_power_avg = mean(signal_power)                     # mean of signal power
+
+    if (SNR==0):
+        noise_power = signal_power_avg / 0.00001
+    else:
+        noise_power = signal_power_avg / SNR
+    mean_noise = 0
+    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise_signal = total_signals + noise
+
+    return noise_signal
+
+    # fig, axs = plt.subplots()
+    # fig.set_size_inches(6, 4)
+    # axs.plot(x_axis, noise_signal)
+    # st.plotly_chart(fig)

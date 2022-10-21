@@ -6,7 +6,9 @@ import pandas as pd
 from random import randint
 
 # ------------------------------------------------------------------------------------Getters
+
 def get_data_frame(df):
+    
     list_of_columns = df.columns
     df_x_axis = df[list_of_columns[0]]
     df_y_axis = df[list_of_columns[1]]
@@ -23,6 +25,7 @@ class Signal:
 
 # ------------------------------------------------------------------------------------General Plotting Signal
 def general_signal_plotting(x_axis,y_axis):
+
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 4)
     axs.plot(x_axis, y_axis)
@@ -43,6 +46,7 @@ def sampling_signal_plotting(df,x_sampled_axis,y_sampled_axis):
 
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
+
     col1,col2 = st.columns([1,2])
 
     list_of_columns = df.columns
@@ -89,7 +93,9 @@ def add_signal(df):
     col2.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------adding_sin_waves
+
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
+
     total_signals = df_y_axis
     list_of_objects.append(Signal(frequency=frequency, amplitude=amplitude))
     for object in list_of_objects:
@@ -121,6 +127,7 @@ def removing_signal(df,removed_freq,removed_amp):
     return total_signals
 
 # ------------------------------------------------------------------------------------Adding Noise Signal
+
 def add_noise(df):
 
     list_of_columns = df.columns
@@ -145,6 +152,7 @@ def add_noise(df):
     general_signal_plotting(df_x_axis,noise_signal)
 
 # ------------------------------------------------------------------------------------Data Frame Sampling
+
 def signal_sampling(df):
 
     list_of_columns = df.columns
@@ -169,6 +177,7 @@ def signal_sampling(df):
     return sampled_amplitude, sampled_time
 
 # ------------------------------------------------------------------------------------Data Frame Reconstructing
+
 def signal_reconstructing(df, sampled_time, sampled_amplitude):
 
     list_of_columns = df.columns
