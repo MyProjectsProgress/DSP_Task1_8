@@ -61,10 +61,14 @@ def add_signal():
 
     remove_button = col1.button('Remove Signal', key="Remove Button")
     if remove_button and len(list_of_objects)>0: 
-        removing_signal(removed_signal_freq,removed_signal_amp) 
-
-    general_signal_plotting(initial_time,total_signals) 
-
+        removing_signal(removed_signal_freq,removed_signal_amp)
+        
+    noise = col1.checkbox('Noise')
+    if noise:
+        noise_signal=add_noise()
+        general_signal_plotting(initial_time,noise_signal)
+    else:
+        general_signal_plotting(initial_time,total_signals)
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
     global total_signals                                                              
@@ -138,29 +142,26 @@ def Sampling():
     axs.plot(x, y1)
     col2.plotly_chart(fig)
 
-# ------------------------------------------------------------------------------------Adding Noise to Signals
+# ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
 
-    Amplitude = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    signalFrequency = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    SNR = st.slider(label='SNR', min_value=0.0, max_value=1.0, value=0.0, step=0.01)
+    SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=1.0)
 
-    x_axis = linspace(0, 8 , 1000)                            # Time Axis         ->   x axis       
-    y_axis = Amplitude * sin((2*pi*signalFrequency)*x_axis)  # Signal value Axis ->   y axis
-
-    signal_power = y_axis **2                                    # Generating the signal power
-    # signal_power_db = 10 * np.log10(signal_power)                # Changing signal to db
+    signal_power = total_signals **2                                    # Generating the signal power
+    
     signal_power_avg = mean(signal_power)                     # mean of signal power
-    # signal_power_avg_db = 10 * np.log10(signal_power_avg)      # Changing signal avg power to db
+
     if (SNR==0):
         noise_power = signal_power_avg / 0.00001
     else:
         noise_power = signal_power_avg / SNR
     mean_noise = 0
-    noise = 0.05*random.normal(mean_noise,sqrt(noise_power),len(y_axis))
-    noise_signal = y_axis + noise
-    
-    fig, axs = plt.subplots()
-    fig.set_size_inches(6, 4)
-    axs.plot(x_axis, noise_signal)
-    st.plotly_chart(fig)
+    noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise_signal = total_signals + noise
+
+    return noise_signal
+
+    # fig, axs = plt.subplots()
+    # fig.set_size_inches(6, 4)
+    # axs.plot(x_axis, noise_signal)
+    # st.plotly_chart(fig)
