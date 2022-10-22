@@ -8,8 +8,9 @@ import numpy as np
 
 
 # ------------------------------------------------------------------------------------Front end 
-# with open("design.css") as source_ds:
-#     st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
+st.set_page_config(layout="wide")
+with open("design.css") as source_ds:
+    st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
 col11,col22,col33 = st.columns([1,1,1])
 dataset = st.sidebar.file_uploader("Sampling Studio", type = ['csv'])
 # ------------------------------------------------------------------------------------ User Options

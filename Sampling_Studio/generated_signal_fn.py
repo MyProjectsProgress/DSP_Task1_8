@@ -1,6 +1,6 @@
 # ------------------------------------------------------------------------------------Importing liberaries
 from turtle import width
-from django.template import Origin
+# from django.template import Origin
 from matplotlib.lines import lineStyles
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil
@@ -19,6 +19,9 @@ def sin_signal_viewer():
 
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 4)
+    font1 = {'family':'serif','color':'white','size':20}
+    plt.xlabel("time",fontdict = font1)
+    plt.ylabel("amplitude",fontdict = font1)
     axs.plot(time, sin_signal)
     st.plotly_chart(fig,use_container_width=True)
 
@@ -27,6 +30,9 @@ def general_signal_plotting(x_axis,y_axis):
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 4)
     axs.plot(x_axis, y_axis)
+    font1 = {'family':'serif','color':'white','size':20}
+    plt.xlabel("time",fontdict = font1)
+    plt.ylabel("amplitude",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Setting Global Variables
@@ -181,7 +187,9 @@ def Sampling_added_signals(total_signals):
     else:
         total_signals_sampled= total_signals[::sample_rate]
         axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
-
+    font1 = {'family':'serif','color':'white','size':20}
+    plt.xlabel("time",fontdict = font1)
+    plt.ylabel("amplitude",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
