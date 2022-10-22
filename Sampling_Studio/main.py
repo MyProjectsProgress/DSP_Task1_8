@@ -3,6 +3,7 @@ from random import randint
 import pandas as pd
 import uploaded_signals_fn as USF
 import generated_signal_fn as GSF
+import numpy as np
 
 # ------------------------------------------------------------------------------------Front end 
 # with open("design.css") as source_ds:
@@ -17,21 +18,25 @@ def uploaded_signal_studio():
     if dataset is not None:
         df = pd.read_csv(dataset)
         df_x_axis,df_y_axis = USF.get_data_frame(df)
-        USF.general_signal_plotting(df_x_axis,df_y_axis)
         USF.add_signal(df)
         sampled_amplitude, sampled_time ,df_y_axis = USF.signal_sampling(df)
         time_points, reconstructed_signal = USF.signal_reconstructing(df, sampled_time, sampled_amplitude)
         USF.sampling_signal_plotting(df,df_y_axis,sampled_time,sampled_amplitude)
         USF.general_signal_plotting(time_points, reconstructed_signal)
         st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
-
+    else:
+        st.header("Upload Your Signal to Start Applying Functions")
+        GSF.sin_signal_viewer()
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
-    GSF.Sampling()
-
+    # GSF.Sampling()
     total_signals=GSF.add_signal()
-
     GSF.Sampling_added_signals(total_signals)
+    time = np.linspace(-1,1,1000)
+    df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': total_signals}, columns=['Time (sc)','Amplitudes (m)'])
+    df.set_index('Time (sc)')
+    df = df.reset_index(drop=True)
+    st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':

@@ -6,7 +6,6 @@ import pandas as pd
 from random import randint
 
 # ------------------------------------------------------------------------------------Getters
-
 def get_data_frame(df):
     
     list_of_columns = df.columns
@@ -35,7 +34,6 @@ def general_signal_plotting(x_axis,y_axis):
 def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
 
     list_of_columns = df.columns
-    # df_y_axis = df[list_of_columns[1]]
     df_x_axis = df[list_of_columns[0]]
 
     fig, axs = plt.subplots()
@@ -63,8 +61,8 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
-    frequency = col1.slider('Choose Frequency', min_value=1, max_value=50, step=1, key='frequency Box') 
-    amplitude = col1.slider('Choose Amplitude', min_value=1, max_value=50, step=1, key='Amplitude Box') 
+    frequency = col1.slider('Choose Frequency (Hz)', min_value=1, max_value=25, step=1, key='frequency Box') 
+    amplitude = col1.slider('Choose Amplitude (m)', min_value=1, max_value=25, step=1, key='Amplitude Box') 
 
     add_button = col1.button('Add Signal', key="Save Button") 
     if add_button:
@@ -77,10 +75,10 @@ def add_signal(df):
     
     signals_names = col1.selectbox('Your Signals',signals_menu) # The select box which contains object names
 
-    splitting_menu_contents = str(signals_names).split(' ') # Splitting the name into 4 values: ['Frequency', 'object.frequency', 'Amplitude',  'object.amplitude']
-    if len(splitting_menu_contents)==4: # Checking if the list contains these 4 values or empty 
-        removed_signal_freq = float(splitting_menu_contents[1]) # Pick the frequency value
-        removed_signal_amp = float(splitting_menu_contents[3]) # Pick the frequency value
+    splitting_menu_contents = str(signals_names).split(' ')
+    if len(splitting_menu_contents)==4:  
+        removed_signal_freq = float(splitting_menu_contents[1]) 
+        removed_signal_amp = float(splitting_menu_contents[3]) 
 
     remove_button = col1.button('Remove Signal', key="Remove Button") 
 
@@ -95,7 +93,6 @@ def add_signal(df):
     col2.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------adding_sin_waves
-
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
 
     total_signals = df_y_axis
@@ -135,7 +132,7 @@ def add_noise():
 
     signal_power = total_signals **2                                    # Generating the signal power
     
-    signal_power_avg = mean(signal_power)                     # mean of signal power
+    signal_power_avg = mean(signal_power)                               # mean of signal power
 
     if (SNR==0):
         noise_power = signal_power_avg / 0.00001
@@ -147,14 +144,12 @@ def add_noise():
 
     return noise_signal
 
-
 # ------------------------------------------------------------------------------------Data Frame Sampling
-
 def signal_sampling(df):
 
     list_of_columns = df.columns
     global noise
-    noise = st.checkbox('Noise')
+    noise = st.sidebar.checkbox('Noise')
     if noise:
         df_y_axis=add_noise()
         df_y_axis=list(df_y_axis)
@@ -180,7 +175,6 @@ def signal_sampling(df):
     return sampled_amplitude, sampled_time , df_y_axis
 
 # ------------------------------------------------------------------------------------Data Frame Reconstructing
-
 def signal_reconstructing(df, sampled_time, sampled_amplitude):
 
     list_of_columns = df.columns
