@@ -1,4 +1,5 @@
 # ------------------------------------------------------------------------------------Importing liberaries
+from matplotlib.lines import lineStyles
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil
 import matplotlib.pyplot as plt
@@ -6,18 +7,6 @@ import pandas as pd
 from random import randint
 from scipy import interpolate
 from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
-
-# ------------------------------------------------------------------------------------Sin Signal Viewer Function For Home Function
-# def sin_signal_viewer():
-#     time = linspace(-1, 1, 1000)
-#     frequency = st.slider(label='Frequency', min_value=1, max_value=150, step=1)
-#     amplitude = st.slider(label='Amplitude', min_value=1, max_value=150, step=1)
-#     sin_signal = amplitude*sin(2*pi*frequency *time) 
-
-#     fig, axs = plt.subplots()
-#     fig.set_size_inches(11, 4)
-#     axs.plot(time, sin_signal)
-#     st.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
 def general_signal_plotting(x_axis,y_axis):
@@ -36,7 +25,6 @@ class Signal:
     def __init__(self,amplitude,frequency):
         self.amplitude = amplitude 
         self.frequency = frequency
-
 # ------------------------------------------------------------------------------------Adding Signals
 def add_signal():
     col1,col2 = st.columns([1,2])
@@ -65,6 +53,7 @@ def add_signal():
             removing_signal(removed_signal_freq,removed_signal_amp) 
     with col2:
         general_signal_plotting(initial_time,total_signals)
+    return total_signals
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
     global total_signals                                                              
@@ -132,17 +121,66 @@ def Sampling():
     axs.plot(time_axis, amplitude_axis)
     col2.plotly_chart(fig,use_container_width=True)
 
+def Sampling_added_signals(total_signals):
+
+    sampling_frequency = st.slider(label='Sampling', min_value=1.0, max_value=150.0, value=1.0, step=1.0)
+    sampling_period=1/sampling_frequency
+
+    sample_rate = int((1000/2)/(sampling_frequency))
+    if sample_rate == 0:
+        sample_rate = 1
+    
+    time_axis      = linspace(-1, 1, 1000)             #time_x_axis      
+    sampled_time_axis      = time_axis[::sample_rate]  #sampled time axis
+
+    fig, axs = plt.subplots()
+    fig.set_size_inches(11, 4)
+
+    interpolation_check_box = st.checkbox('Interpolation',key='interpolation_check_box')
+    noise = st.checkbox('Noise')
+    if noise and interpolation_check_box :
+        # ----- adding noise ---- #
+        noise_signal=add_noise()
+        noise_sampled_y_axis = noise_signal[::sample_rate]
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
+        # ---- adding interpolation -----#
+        time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
+        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = noise_sampled_y_axis * sinc(K)
+        reconstructed_signal = sum(final_matrix, axis=1)
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',zorder=3)
+        #------ Draw noise signals -----#
+        axs.plot(time_axis,noise_signal, color='blue',zorder=1)
+    elif noise:
+        noise_signal=add_noise()
+        noise_sampled_y_axis = noise_signal[::sample_rate]
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
+        axs.plot(time_axis,noise_signal, color='White',zorder=2)
+    elif interpolation_check_box:
+        total_signals_sampled= total_signals[::sample_rate]
+        time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
+        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = total_signals_sampled * sinc(K)
+        reconstructed_signal = sum(final_matrix, axis=1)
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed')
+        axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
+        axs.plot(time_axis,total_signals)
+    else:
+        total_signals_sampled= total_signals[::sample_rate]
+        axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
+        axs.plot(time_axis,total_signals)
+    st.plotly_chart(fig)
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
 
-    SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=1.0)
+    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=100.0, value=1.0, step=1.0)
 
     signal_power = total_signals **2                                    # Generating the signal power
     
     signal_power_avg = mean(signal_power)                     # mean of signal power
 
     if (SNR==0):
-        noise_power = signal_power_avg / 0.00001
+        noise_power = signal_power_avg / 0.0000001
     else:
         noise_power = signal_power_avg / SNR
     mean_noise = 0
@@ -150,8 +188,3 @@ def add_noise():
     noise_signal = total_signals + noise
 
     return noise_signal
-
-    # fig, axs = plt.subplots()
-    # fig.set_size_inches(6, 4)
-    # axs.plot(x_axis, noise_signal)
-    # st.plotly_chart(fig)

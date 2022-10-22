@@ -29,7 +29,9 @@ def uploaded_signal_studio():
 def generated_signal_studio():
     GSF.Sampling()
 
-    GSF.add_signal()
+    total_signals=GSF.add_signal()
+
+    GSF.Sampling_added_signals(total_signals)
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':
