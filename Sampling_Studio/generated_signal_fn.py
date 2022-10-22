@@ -1,4 +1,5 @@
 # ------------------------------------------------------------------------------------Importing liberaries
+from turtle import width
 from django.template import Origin
 from matplotlib.lines import lineStyles
 import streamlit as st
@@ -155,7 +156,7 @@ def Sampling_added_signals(total_signals):
 
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',zorder=3)
-        axs.plot(time_axis,noise_signal, color='blue',zorder=1)
+        axs.plot(time_axis,noise_signal, color='blue',zorder=1, alpha=0.2)
     
     elif noise and interpolation_check_box :
 
@@ -171,7 +172,7 @@ def Sampling_added_signals(total_signals):
     elif noise and Original_Graph :
 
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
-        axs.plot(time_axis,noise_signal, color='blue',zorder=1)
+        axs.plot(time_axis,noise_signal, color='blue', zorder=1 ,linewidth=1,  alpha=0.2)
 
     elif interpolation_check_box and Original_Graph :
         # sampling without noise #
@@ -202,7 +203,7 @@ def Sampling_added_signals(total_signals):
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed')
         axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
     elif Original_Graph:
-        
+
         total_signals_sampled= total_signals[::sample_rate]
 
         axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
