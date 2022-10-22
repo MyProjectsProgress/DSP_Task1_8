@@ -6,7 +6,6 @@ import pandas as pd
 from random import randint
 
 # ------------------------------------------------------------------------------------Getters
-
 def get_data_frame(df):
     
     list_of_columns = df.columns

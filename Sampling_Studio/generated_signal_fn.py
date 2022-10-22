@@ -95,18 +95,18 @@ def removing_signals(removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Sampling Signals
 def sampling():
 
-    amplitude = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    signal_frequency = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    amplitude          = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    signal_frequency   = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
     sampling_frequency = st.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
 
-    sampling_period=1/sampling_frequency                                  #Ts
+    sampling_period=1/sampling_frequency                                    #Ts
 
     col1,col2 = st.columns([1,1])
     
     showing_signal          = col1.checkbox('Show Orginal Signal on Graph')
     interpolation_check_box = col2.checkbox('Interpolation')
 
-    sampled_time_axis      = arange(0, 8, sampling_period)     #time steps
+    sampled_time_axis      = arange(0, 8, sampling_period)                  #time steps
 
     sampled_amplitude_axis = amplitude * sin(2*pi*signal_frequency*sampled_time_axis) 
 
