@@ -15,7 +15,7 @@ It is a web application that illustrates the signal sampling and recovery showin
 - Resize: The application can be resized easily without messing up your UI.
 
 ## Technology Used
-- Pyhthon "Stremlit"
+- Python "Streamlit"
 - Html
 - CSS5 
 
