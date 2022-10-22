@@ -25,7 +25,8 @@ class Signal:
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
     global total_signals
-    col1,col2 = st.columns([1,2])
+    col11,col22 = st.columns([1,1])
+    col1,col2,col3 = st.columns([1,1,1])
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
@@ -41,8 +42,8 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
-    frequency = col1.slider('Choose Frequency (Hz)', min_value=1, max_value=25, step=1, key='frequency Box') 
-    amplitude = col1.slider('Choose Amplitude (m)', min_value=1, max_value=25, step=1, key='Amplitude Box') 
+    frequency = col11.slider('Choose Frequency (Hz)', min_value=1, max_value=25, step=1, key='frequency Box') 
+    amplitude = col22.slider('Choose Amplitude (m)', min_value=1, max_value=25, step=1, key='Amplitude Box') 
 
     add_button = col1.button('Add Signal', key="Save Button") 
     if add_button:
@@ -53,13 +54,13 @@ def add_signal(df):
     for object in list_of_objects: 
         signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}') 
     
-    signals_names = col1.selectbox('Your Signals',signals_menu) 
+    signals_names = st.sidebar.selectbox('Your Signals',signals_menu) 
     splitting_menu_contents = str(signals_names).split(' ')
     if len(splitting_menu_contents)==4:  
         removed_signal_freq = float(splitting_menu_contents[1]) 
         removed_signal_amp = float(splitting_menu_contents[3]) 
 
-    remove_button = col1.button('Remove Signal', key="Remove Button") 
+    remove_button = col3.button('Remove Signal', key="Remove Button") 
 
     if remove_button and len(list_of_objects)>0:
         total_signals = removing_signal(df,removed_signal_freq,removed_signal_amp) 
@@ -71,7 +72,7 @@ def add_signal(df):
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(corresponding_x_axis, total_signals)
-    col2.plotly_chart(fig,use_container_width=True)
+    st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------adding_sin_waves
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
