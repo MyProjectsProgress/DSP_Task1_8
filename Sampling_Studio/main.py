@@ -32,9 +32,11 @@ def uploaded_signal_studio():
 
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
-    GSF.sampling()
-    GSF.main_add_signal()
-    #st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
+    GSF.Sampling()
+
+    total_signals=GSF.add_signal()
+
+    GSF.Sampling_added_signals(total_signals)
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':
