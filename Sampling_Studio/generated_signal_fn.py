@@ -1,4 +1,5 @@
 # ------------------------------------------------------------------------------------Importing liberaries
+from django.template import Origin
 from matplotlib.lines import lineStyles
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil
@@ -130,45 +131,88 @@ def Sampling_added_signals(total_signals):
     if sample_rate == 0:
         sample_rate = 1
     
-    time_axis      = linspace(-1, 1, 1000)             #time_x_axis      
-    sampled_time_axis      = time_axis[::sample_rate]  #sampled time axis
+    time_axis      = linspace(-1, 1, 1000)                 
+    sampled_time_axis      = time_axis[::sample_rate]  
+
 
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 4)
 
+    Original_Graph = st.checkbox('Original_Graph',key='Original_Graph')
     interpolation_check_box = st.checkbox('Interpolation',key='interpolation_check_box')
     noise = st.checkbox('Noise')
-    if noise and interpolation_check_box :
-        # ----- adding noise ---- #
-        noise_signal=add_noise()
-        noise_sampled_y_axis = noise_signal[::sample_rate]
-        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
-        # ---- adding interpolation -----#
+
+    noise_signal=add_noise()
+    noise_sampled_y_axis = noise_signal[::sample_rate]
+
+    if noise and interpolation_check_box and Original_Graph :
+
+        # ---- adding interpolation with noise -----#
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
         K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
         final_matrix = noise_sampled_y_axis * sinc(K)
         reconstructed_signal = sum(final_matrix, axis=1)
+
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',zorder=3)
-        #------ Draw noise signals -----#
         axs.plot(time_axis,noise_signal, color='blue',zorder=1)
-    elif noise:
-        noise_signal=add_noise()
-        noise_sampled_y_axis = noise_signal[::sample_rate]
-        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
-        axs.plot(time_axis,noise_signal, color='White',zorder=2)
-    elif interpolation_check_box:
+    
+    elif noise and interpolation_check_box :
+
+        # ---- adding interpolation with noise -----#
+        time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
+        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = noise_sampled_y_axis * sinc(K)
+        reconstructed_signal = sum(final_matrix, axis=1)
+
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',zorder=3)
+    
+    elif noise and Original_Graph :
+
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=2)
+        axs.plot(time_axis,noise_signal, color='blue',zorder=1)
+
+    elif interpolation_check_box and Original_Graph :
+        # sampling without noise #
         total_signals_sampled= total_signals[::sample_rate]
+        # interpolation without noise #
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
         K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
         final_matrix = total_signals_sampled * sinc(K)
         reconstructed_signal = sum(final_matrix, axis=1)
+
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed')
         axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
         axs.plot(time_axis,total_signals)
+
+    elif noise:
+
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
+
+    elif interpolation_check_box:
+        #sampling without noise#
+        total_signals_sampled= total_signals[::sample_rate]
+        # interolation without noise #
+        time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
+        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = total_signals_sampled * sinc(K)
+        reconstructed_signal = sum(final_matrix, axis=1)
+
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed')
+        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
+    elif Original_Graph:
+        
+        total_signals_sampled= total_signals[::sample_rate]
+
+        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',zorder=1)
+        axs.plot(time_axis,total_signals, color='blue',zorder=1)
+
     else:
         total_signals_sampled= total_signals[::sample_rate]
+
         axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
-        axs.plot(time_axis,total_signals)
+
     st.plotly_chart(fig)
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():
