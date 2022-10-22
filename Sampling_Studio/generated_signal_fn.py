@@ -8,16 +8,16 @@ from scipy import interpolate
 from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 
 # ------------------------------------------------------------------------------------Sin Signal Viewer Function For Home Function
-# def sin_signal_viewer():
-#     time = linspace(-1, 1, 1000)
-#     frequency = st.slider(label='Frequency', min_value=1, max_value=150, step=1)
-#     amplitude = st.slider(label='Amplitude', min_value=1, max_value=150, step=1)
-#     sin_signal = amplitude*sin(2*pi*frequency *time) 
+def sin_signal_viewer():
+    time = linspace(-1, 1, 1000)
+    frequency = st.slider(label='Frequency', min_value=1, max_value=150, step=1)
+    amplitude = st.slider(label='Amplitude', min_value=1, max_value=150, step=1)
+    sin_signal = amplitude*sin(2*pi*frequency *time) 
 
-#     fig, axs = plt.subplots()
-#     fig.set_size_inches(11, 4)
-#     axs.plot(time, sin_signal)
-#     st.plotly_chart(fig)
+    fig, axs = plt.subplots()
+    fig.set_size_inches(11, 4)
+    axs.plot(time, sin_signal)
+    st.plotly_chart(fig)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
 def general_signal_plotting(x_axis,y_axis):
@@ -95,9 +95,9 @@ def removing_signals(removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Sampling Signals
 def sampling():
 
-    amplitude          = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    signal_frequency   = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    sampling_frequency = st.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
+    amplitude          = st.sidebar.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    signal_frequency   = st.sidebar.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    sampling_frequency = st.sidebar.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
 
     sampling_period=1/sampling_frequency                                    #Ts
 

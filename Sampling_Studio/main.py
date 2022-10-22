@@ -26,11 +26,15 @@ def uploaded_signal_studio():
         USF.sampling_signal_plotting(df,df_y_axis,sampled_time,sampled_amplitude)
         USF.general_signal_plotting(time_points, reconstructed_signal)
         st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
+    else:
+        st.write("**Upload Your Signal to Apply Changes To It**")
+        GSF.sin_signal_viewer()
 
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
     GSF.sampling()
     GSF.main_add_signal()
+    #st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':

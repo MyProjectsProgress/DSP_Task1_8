@@ -7,7 +7,6 @@ from random import randint
 
 # ------------------------------------------------------------------------------------Getters
 def get_data_frame(df):
-    
     list_of_columns = df.columns
     df_x_axis = df[list_of_columns[0]]
     df_y_axis = df[list_of_columns[1]]
