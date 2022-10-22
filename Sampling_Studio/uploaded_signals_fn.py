@@ -42,8 +42,8 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
-    frequency = col11.slider('Choose Frequency (Hz)', min_value=1, max_value=25, step=1, key='frequency Box') 
-    amplitude = col22.slider('Choose Amplitude (m)', min_value=1, max_value=25, step=1, key='Amplitude Box') 
+    frequency = col11.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box') 
+    amplitude = col22.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
     add_button = col1.button('Add Signal', key="Save Button") 
     if add_button:
@@ -137,7 +137,7 @@ def removing_signal(df,removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Adding Noise Signal
 def add_noise():
 
-    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=0.1)
+    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=0.0, step=0.1)
 
     signal_power = total_signals **2                                    # Generating the signal power
     
@@ -158,8 +158,8 @@ def signal_sampling(df):
 
     list_of_columns = df.columns
     global noise
-    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=50, step=1)
-    noise = st.sidebar.checkbox('Add Noise')
+    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
+    noise       = st.sidebar.checkbox('Add Noise', key='14412')
     if noise:
         df_y_axis=add_noise()
         df_y_axis=list(df_y_axis)
