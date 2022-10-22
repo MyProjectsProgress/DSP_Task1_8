@@ -10,11 +10,9 @@ st.set_page_config(layout="wide")
 with open("design.css") as source_ds:
     st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
 
-# dataset = st.sidebar.file_uploader("Sampling Studio", type = ['csv'])
-
 # ------------------------------------------------------------------------------------ User Options
 options = st.sidebar.radio('Site Tabs', options=['Uploaded Signal Studio','Signal Generation Studio'])
-tab1, tab2 = st.tabs(['Show File', 'Hide File'])
+tab1, tab2 = st.tabs(['Show File Browse', 'Hide File Browse'])
 with tab1:
     dataset = st.file_uploader("Upload Your File Here", type = ['csv'])
 
@@ -28,7 +26,7 @@ def uploaded_signal_studio():
         time_points, reconstructed_signal = USF.signal_reconstructing(df, sampled_time, sampled_amplitude)
         USF.sampling_signal_plotting(df,df_y_axis,sampled_time,sampled_amplitude)
         USF.general_signal_plotting(time_points, reconstructed_signal)
-        st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 42332")
+        st.sidebar.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 42332")
     else:
         st.header("Upload Your Signal to Start Applying Functions")
         GSF.sin_signal_viewer()
@@ -38,13 +36,10 @@ def generated_signal_studio():
     GSF.Sampling_added_signals(total_signals)
     time = np.linspace(-1,1,1000)
     df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': total_signals}, columns=['Time (sc)','Amplitudes (m)'])
-    st.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 11276")
+    st.sidebar.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 11276")
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':
     uploaded_signal_studio()
 elif options == 'Signal Generation Studio':
     generated_signal_studio()
-
-# with tab2:
-#     generated_signal_studio()

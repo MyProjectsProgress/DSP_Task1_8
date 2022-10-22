@@ -22,6 +22,7 @@ def sin_signal_viewer():
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(time, sin_signal)
+    plt.title("Sin Wave Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
@@ -32,6 +33,7 @@ def general_signal_plotting(x_axis,y_axis):
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
+    plt.title("Composed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Setting Global Variables
@@ -192,6 +194,7 @@ def Sampling_added_signals(total_signals):
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
+    plt.title("Reconstructed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 # ------------------------------------------------------------------------------------Removing Added Signals
 def add_noise():

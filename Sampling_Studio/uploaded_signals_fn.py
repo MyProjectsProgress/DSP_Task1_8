@@ -1,4 +1,5 @@
 # ------------------------------------------------------------------------------------Importing liberaries
+from tkinter import CENTER
 from turtle import title
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
@@ -71,6 +72,7 @@ def add_signal(df):
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
+    plt.title("Uploaded Signal",fontdict = font1)
     axs.plot(corresponding_x_axis, total_signals)
     st.plotly_chart(fig,use_container_width=True)
 
@@ -95,6 +97,7 @@ def general_signal_plotting(x_axis,y_axis):
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(x_axis, y_axis)
+    plt.title("Reconstructed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------General Plotting Signal
@@ -110,6 +113,7 @@ def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
+    plt.title("Noised Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 
