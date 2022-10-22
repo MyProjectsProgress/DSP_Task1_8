@@ -5,6 +5,8 @@ import uploaded_signals_fn as USF
 import generated_signal_fn as GSF
 import numpy as np
 
+
+
 # ------------------------------------------------------------------------------------Front end 
 # with open("design.css") as source_ds:
 #     st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
@@ -29,14 +31,11 @@ def uploaded_signal_studio():
         GSF.sin_signal_viewer()
 # ------------------------------------------------------------------------------------Generated Signal Studio
 def generated_signal_studio():
-    # GSF.Sampling()
     total_signals=GSF.add_signal()
     GSF.Sampling_added_signals(total_signals)
     time = np.linspace(-1,1,1000)
     df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': total_signals}, columns=['Time (sc)','Amplitudes (m)'])
-    df.set_index('Time (sc)')
-    df = df.reset_index(drop=True)
-    st.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
+    st.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button")
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':

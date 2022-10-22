@@ -1,4 +1,5 @@
 # ------------------------------------------------------------------------------------Importing liberaries
+from turtle import title
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
 import matplotlib.pyplot as plt
@@ -21,27 +22,6 @@ class Signal:
     def __init__(self,amplitude,frequency):
         self.amplitude = amplitude 
         self.frequency = frequency
-
-# ------------------------------------------------------------------------------------General Plotting Signal
-def general_signal_plotting(x_axis,y_axis):
-
-    fig, axs = plt.subplots()
-    fig.set_size_inches(8, 4)
-    axs.plot(x_axis, y_axis)
-    st.plotly_chart(fig,use_container_width=True)
-
-# ------------------------------------------------------------------------------------General Plotting Signal
-def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
-
-    list_of_columns = df.columns
-    df_x_axis = df[list_of_columns[0]]
-
-    fig, axs = plt.subplots()
-    fig.set_size_inches(8, 4)
-    axs.plot(df_x_axis, df_y_axis)
-    axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
-    st.plotly_chart(fig,use_container_width=True)
-
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
     global total_signals
@@ -103,6 +83,27 @@ def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
         total_signals += signal_y_axis
     return total_signals
 
+# ------------------------------------------------------------------------------------General Plotting Signal
+def general_signal_plotting(x_axis,y_axis):
+
+    fig, axs = plt.subplots()
+    fig.set_size_inches(8, 3)
+    axs.plot(x_axis, y_axis)
+    st.plotly_chart(fig,use_container_width=True)
+
+# ------------------------------------------------------------------------------------General Plotting Signal
+def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
+
+    list_of_columns = df.columns
+    df_x_axis = df[list_of_columns[0]]
+
+    fig, axs = plt.subplots()
+    fig.set_size_inches(8, 3)
+    axs.plot(df_x_axis, df_y_axis)
+    axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
+    st.plotly_chart(fig,use_container_width=True)
+
+
 # ------------------------------------------------------------------------------------Removing Signal
 def removing_signal(df,removed_freq,removed_amp):
 
@@ -148,36 +149,19 @@ def signal_sampling(df):
 
     list_of_columns = df.columns
     global noise
-
-    original_graph_checkbox = st.sidebar.checkbox('Original Graph',key='Original_Graph2')
-    interpolation_checkbox = st.sidebar.checkbox('Interpolation',key='interpolation_check_box2')
-    noise_checkbox = st.sidebar.checkbox('Noise', key="Noise Check Box2")
-    
-    if noise_checkbox:
+    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=50, step=1)
+    noise = st.sidebar.checkbox('Add Noise')
+    if noise:
         df_y_axis=add_noise()
         df_y_axis=list(df_y_axis)
-    elif noise_checkbox and interpolation_checkbox :
-        pass
-    elif original_graph_checkbox : 
-        pass
-    elif original_graph_checkbox and interpolation_checkbox :
-        pass
-    elif original_graph_checkbox and noise_checkbox :
-        pass
-    elif interpolation_checkbox :
-        pass
-    elif original_graph_checkbox and noise_checkbox and interpolation_checkbox:
-        pass
     else:
         df_y_axis = list(df[list_of_columns[1]])
-        df_x_axis = list(df[list_of_columns[0]])
+    df_x_axis = list(df[list_of_columns[0]])
 
     begin_time = df[list_of_columns[0]].iat[0] # begin_time
     end_time = df[list_of_columns[0]].iloc[-1] # end time 
 
     time_range = abs(begin_time - end_time)
-
-    sample_freq = st.sidebar.slider(label='Sampling Frequency', min_value=1, max_value=150, step=1)
 
     sample_rate = int((len(df_x_axis)/time_range)/(sample_freq)) #hakhod sample kol 150 no2ta msln 900pt-- 6 sec 
 

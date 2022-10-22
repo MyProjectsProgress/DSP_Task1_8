@@ -95,46 +95,6 @@ def removing_signal(removed_freq,removed_amp):
         signal_y_axis = object_amplitude*sin(2*pi*object_frequency*initial_time)
         total_signals += signal_y_axis
 
-# ------------------------------------------------------------------------------------Sampling Signals
-# def Sampling():
-
-#     amplitude = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-#     signal_frequency = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-#     sampling_frequency = st.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
-
-#     sampling_period=1/sampling_frequency                                  #Ts
-
-#     col1,col2 = st.columns([1,1])
-    
-#     showing_signal          = col1.checkbox('Show Orginal Signal on Graph')
-#     interpolation_check_box = col2.checkbox('Interpolation')
-
-#     sampled_time_axis      = arange(0, 8, sampling_period)     #time steps
-
-#     sampled_amplitude_axis = amplitude * sin(2*pi*signal_frequency*sampled_time_axis) 
-
-#     time_axis      = linspace(0, 8, 1000)
-#     amplitude_axis = amplitude*sin(2*pi*signal_frequency * time_axis )
-
-#     fig2, axs = plt.subplots()
-#     fig2.set_size_inches(6, 4)
-
-#     if showing_signal:
-#         axs.plot(time_axis, amplitude_axis, color='red', linewidth=3, linestyle='-')
-#     elif interpolation_check_box :
-#         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
-#         K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
-#         final_matrix = sampled_amplitude_axis * sinc(K)
-#         reconstructed_signal = sum(final_matrix, axis=1)
-#         axs.plot(time_axis,reconstructed_signal,color='green',linestyle='-')
-#     axs.plot(sampled_time_axis, sampled_amplitude_axis,color="royalblue",linestyle='', marker='o' ,markersize=3 )
-#     axs.axhline(0, color='black', linestyle='-', linewidth=0)
-#     col1.plotly_chart(fig2,use_container_width=True)
-#     fig, axs = plt.subplots()
-#     fig.set_size_inches(6, 4)
-#     axs.plot(time_axis, amplitude_axis)
-#     col2.plotly_chart(fig,use_container_width=True)
-
 # ------------------------------------------------------------------------------------Sampling Added Signals
 def Sampling_added_signals(total_signals):
 
