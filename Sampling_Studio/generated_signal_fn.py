@@ -159,7 +159,7 @@ def Sampling_added_signals(total_signals):
 
     elif noise:
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='')
-        axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=0.4)
+        # axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=0.4)
 
     elif interpolation_check_box:
 
