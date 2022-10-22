@@ -68,8 +68,8 @@ def add_signal(df):
     fig.set_size_inches(8, 4)
     
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("time",fontdict = font1)
-    plt.ylabel("amplitude",fontdict = font1)
+    plt.xlabel("Time",fontdict = font1)
+    plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(corresponding_x_axis, total_signals)
     col2.plotly_chart(fig,use_container_width=True)
 
@@ -91,8 +91,8 @@ def general_signal_plotting(x_axis,y_axis):
     fig, axs = plt.subplots()
     fig.set_size_inches(8, 3)
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("time",fontdict = font1)
-    plt.ylabel("amplitude",fontdict = font1)
+    plt.xlabel("Time",fontdict = font1)
+    plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(x_axis, y_axis)
     st.plotly_chart(fig,use_container_width=True)
 
@@ -107,8 +107,8 @@ def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
     axs.plot(df_x_axis, df_y_axis)
     axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("time",fontdict = font1)
-    plt.ylabel("amplitude",fontdict = font1)
+    plt.xlabel("Time",fontdict = font1)
+    plt.ylabel("Amplitude",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 
