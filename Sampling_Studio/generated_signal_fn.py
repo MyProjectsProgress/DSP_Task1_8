@@ -26,7 +26,7 @@ class Signal:
         self.amplitude = amplitude 
         self.frequency = frequency
 # ------------------------------------------------------------------------------------Adding Signals
-def main_add_signal():
+def add_signal():
     col1,col2 = st.columns([1,2])
     with col1:
         frequency = col1.slider('Choose Frequency', min_value=1, max_value=50, step=1, key='frequency Box') 
@@ -34,7 +34,7 @@ def main_add_signal():
 
         add_button = col1.button('Add Signal', key="Save Button") 
         if add_button:
-            summing_signals(frequency,amplitude) 
+            adding_signals(frequency,amplitude) 
         
         signals_menu = []
         splitting_menu_contents = [] 
@@ -50,12 +50,12 @@ def main_add_signal():
 
         remove_button = col1.button('Remove Signal', key="Remove Button")
         if remove_button and len(list_of_objects)>0: 
-            removing_signals(removed_signal_freq,removed_signal_amp) 
+            removing_signal(removed_signal_freq,removed_signal_amp) 
     with col2:
         general_signal_plotting(initial_time,total_signals)
     return total_signals
 # ------------------------------------------------------------------------------------Adding Signals
-def summing_signals(frequency,amplitude):                                              
+def adding_signals(frequency,amplitude):                                              
     global total_signals                                                              
     total_signals = zeros(1000)                                                       
     list_of_objects.append(Signal(frequency=frequency, amplitude=amplitude))          
@@ -66,7 +66,7 @@ def summing_signals(frequency,amplitude):
         total_signals += signal_y_axis
 
 # ------------------------------------------------------------------------------------Removing Added Signals
-def removing_signals(removed_freq,removed_amp):
+def removing_signal(removed_freq,removed_amp):
     global total_signals 
     total_signals = zeros(1000)
 
@@ -81,21 +81,21 @@ def removing_signals(removed_freq,removed_amp):
         signal_y_axis = object_amplitude*sin(2*pi*object_frequency*initial_time)
         total_signals += signal_y_axis
 
-# ------------------------------------------------------------------------------------Sampling Signals
-def sampling():
+# ------------------------------------------------------------------------------------Removing Added Signals
+def Sampling():
 
-    amplitude          = st.sidebar.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    signal_frequency   = st.sidebar.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
-    sampling_frequency = st.sidebar.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
+    amplitude = st.slider(label='Amplitude', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    signal_frequency = st.slider(label='Frequency', min_value=0.1, max_value=5.0, value=1.0, step=0.1)
+    sampling_frequency = st.slider(label='Sampling', min_value=1.0, max_value=150.0, value=float(ceil(2*signal_frequency)), step=1.0)
 
-    sampling_period=1/sampling_frequency                                    #Ts
+    sampling_period=1/sampling_frequency                                  #Ts
 
     col1,col2 = st.columns([1,1])
     
     showing_signal          = col1.checkbox('Show Orginal Signal on Graph')
     interpolation_check_box = col2.checkbox('Interpolation')
 
-    sampled_time_axis      = arange(0, 8, sampling_period)                  #time steps
+    sampled_time_axis      = arange(0, 8, sampling_period)     #time steps
 
     sampled_amplitude_axis = amplitude * sin(2*pi*signal_frequency*sampled_time_axis) 
 
@@ -175,9 +175,9 @@ def add_noise():
 
     SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=100.0, value=1.0, step=1.0)
 
-    signal_power = total_signals **2      # Generating the signal power
+    signal_power = total_signals **2                                    # Generating the signal power
     
-    signal_power_avg = mean(signal_power) # mean of signal power
+    signal_power_avg = mean(signal_power)                     # mean of signal power
 
     if (SNR==0):
         noise_power = signal_power_avg / 0.0000001
