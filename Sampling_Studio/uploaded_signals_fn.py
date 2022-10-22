@@ -69,12 +69,11 @@ def add_signal(df):
         total_signals = adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis)
 
     signals_menu = [] 
-    splitting_menu_contents = [] # List that contains the signal name so that we split that name and get its amp and freq
-    for object in list_of_objects: # Looping over the list ob objects to append a name of each object in the select box
-        signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}') # Appending a unique name to each signal based on its amp and freq values
+    splitting_menu_contents = [] 
+    for object in list_of_objects: 
+        signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}') 
     
-    signals_names = col1.selectbox('Your Signals',signals_menu) # The select box which contains object names
-
+    signals_names = col1.selectbox('Your Signals',signals_menu) 
     splitting_menu_contents = str(signals_names).split(' ')
     if len(splitting_menu_contents)==4:  
         removed_signal_freq = float(splitting_menu_contents[1]) 
@@ -128,7 +127,7 @@ def removing_signal(df,removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Adding Noise Signal
 def add_noise():
 
-    SNR = st.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=0.1)
+    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=1.0, step=0.1)
 
     signal_power = total_signals **2                                    # Generating the signal power
     
@@ -149,20 +148,36 @@ def signal_sampling(df):
 
     list_of_columns = df.columns
     global noise
-    noise = st.sidebar.checkbox('Noise')
-    if noise:
+
+    original_graph_checkbox = st.sidebar.checkbox('Original Graph',key='Original_Graph2')
+    interpolation_checkbox = st.sidebar.checkbox('Interpolation',key='interpolation_check_box2')
+    noise_checkbox = st.sidebar.checkbox('Noise', key="Noise Check Box2")
+    
+    if noise_checkbox:
         df_y_axis=add_noise()
         df_y_axis=list(df_y_axis)
+    elif noise_checkbox and interpolation_checkbox :
+        pass
+    elif original_graph_checkbox : 
+        pass
+    elif original_graph_checkbox and interpolation_checkbox :
+        pass
+    elif original_graph_checkbox and noise_checkbox :
+        pass
+    elif interpolation_checkbox :
+        pass
+    elif original_graph_checkbox and noise_checkbox and interpolation_checkbox:
+        pass
     else:
         df_y_axis = list(df[list_of_columns[1]])
-    df_x_axis = list(df[list_of_columns[0]])
+        df_x_axis = list(df[list_of_columns[0]])
 
     begin_time = df[list_of_columns[0]].iat[0] # begin_time
     end_time = df[list_of_columns[0]].iloc[-1] # end time 
 
     time_range = abs(begin_time - end_time)
 
-    sample_freq = st.slider(label='Sampling Frequency', min_value=1, max_value=150, step=1)
+    sample_freq = st.sidebar.slider(label='Sampling Frequency', min_value=1, max_value=150, step=1)
 
     sample_rate = int((len(df_x_axis)/time_range)/(sample_freq)) #hakhod sample kol 150 no2ta msln 900pt-- 6 sec 
 
