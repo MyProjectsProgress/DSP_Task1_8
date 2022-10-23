@@ -21,9 +21,9 @@ It is a web application that illustrates the signal sampling and recovery showin
 
 ## Demo
 
+https://user-images.githubusercontent.com/61360429/197367405-60b82fde-e997-45fc-92c9-4292bd8be9f6.mp4
 
 
-https://user-images.githubusercontent.com/61360429/19736737
 
 https://user-images.githubusercontent.com/61360429/197367387-65562de9-253f-40a2-9717-e1f2c3685507.mp4
 
