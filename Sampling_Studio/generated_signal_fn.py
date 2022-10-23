@@ -42,6 +42,7 @@ class Signal:
     def __init__(self,amplitude,frequency):
         self.amplitude = amplitude 
         self.frequency = frequency
+        
 # ------------------------------------------------------------------------------------Adding Signals
 def add_signal():
     col11,col22 = st.columns([1,1])
@@ -73,6 +74,7 @@ def add_signal():
     general_signal_plotting(initial_time,total_signals)
 
     return total_signals
+
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
     global total_signals                                                              
@@ -130,7 +132,7 @@ def Sampling_added_signals(total_signals):
         final_matrix = noise_sampled_y_axis * sinc(K)
         reconstructed_signal = sum(final_matrix, axis=1)
 
-        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
         axs.plot(time_axis,noise_signal, color='royalblue', alpha=0.4)
     
@@ -141,14 +143,14 @@ def Sampling_added_signals(total_signals):
         final_matrix = noise_sampled_y_axis * sinc(K)
         reconstructed_signal = sum(final_matrix, axis=1)
 
-        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
+        axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
     
     elif noise and Original_Graph :
 
         total_signals_sampled= total_signals[::sample_rate]
         axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
-        axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=0.4)
+        axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=1)
 
     elif interpolation_check_box and Original_Graph :
 
@@ -159,7 +161,7 @@ def Sampling_added_signals(total_signals):
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.9)
-        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow', marker="o" ,linestyle="")
+        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow', marker="o" ,linestyle="",alpha=0.2)
         axs.plot(time_axis,total_signals, color='royalblue',alpha=0.4)
 
     elif noise:
@@ -173,24 +175,25 @@ def Sampling_added_signals(total_signals):
         final_matrix = total_signals_sampled * sinc(K)
         reconstructed_signal = sum(final_matrix, axis=1)
 
-        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
-        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
+        axs.plot(time_axis,reconstructed_signal,color='Red',alpha = 1)
+        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
 
     elif Original_Graph:
 
         total_signals_sampled= total_signals[::sample_rate]
-        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
+        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
         axs.plot(time_axis,total_signals, color='royalblue')
 
     else:
         total_signals_sampled= total_signals[::sample_rate]
-        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow' , marker="o" ,linestyle="")
+        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow' , marker="o" ,linestyle="",alpha=0.5)
 
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Reconstructed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
+
 # ------------------------------------------------------------------------------------Adding Noise
 def add_noise():
 
