@@ -1,13 +1,9 @@
 # ------------------------------------------------------------------------------------Importing liberaries
-from turtle import width
 from matplotlib.lines import lineStyles
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil
 import matplotlib.pyplot as plt
 import pandas as pd
-from random import randint
-from scipy import interpolate
-from scipy.interpolate import Rbf, InterpolatedUnivariateSpline
 
 # ------------------------------------------------------------------------------------Sin Plotting Signal
 def sin_signal_viewer():
@@ -163,12 +159,11 @@ def Sampling_added_signals(total_signals):
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.9)
-        axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
+        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow', marker="o" ,linestyle="")
         axs.plot(time_axis,total_signals, color='royalblue',alpha=0.4)
 
     elif noise:
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='')
-        # axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=0.4)
 
     elif interpolation_check_box:
 
@@ -189,14 +184,14 @@ def Sampling_added_signals(total_signals):
 
     else:
         total_signals_sampled= total_signals[::sample_rate]
-        axs.plot(sampled_time_axis, total_signals_sampled , marker="o" ,linestyle="")
+        axs.plot(sampled_time_axis, total_signals_sampled, color='yellow' , marker="o" ,linestyle="")
 
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Reconstructed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
-# ------------------------------------------------------------------------------------Removing Added Signals
+# ------------------------------------------------------------------------------------Adding Noise
 def add_noise():
 
     SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=0.0, step=0.1)

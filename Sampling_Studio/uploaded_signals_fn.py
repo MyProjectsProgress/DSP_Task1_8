@@ -1,11 +1,8 @@
 # ------------------------------------------------------------------------------------Importing liberaries
-from tkinter import CENTER
-from turtle import title
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
 import matplotlib.pyplot as plt
 import pandas as pd
-from random import randint
 
 # ------------------------------------------------------------------------------------Getters
 def get_data_frame(df):
@@ -76,7 +73,7 @@ def add_signal(df):
     axs.plot(corresponding_x_axis, total_signals)
     st.plotly_chart(fig,use_container_width=True)
 
-# ------------------------------------------------------------------------------------adding_sin_waves
+# ------------------------------------------------------------------------------------Adding Sin Waves
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
 
     total_signals = df_y_axis
