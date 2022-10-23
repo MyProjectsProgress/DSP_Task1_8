@@ -184,17 +184,44 @@ nav h1{
 
 }
 
-.col-one h2{
+/* .col-one img{
     text-align: center;
-    font-size: 24px;
+    font-size: 24px; 
     font-weight: 400;
-    color: #fff;
+    color: #fff; 
+    float: left;
+    margin-bottom: 20px;
+}
+.col-two{
+    /* background-color: red; 
+    width: 100%;
 }
 .col-two h2{
     text-align: center;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 400;
+    color: indianred;
+}
+.col-two p{
+    text-align: left;
+    font-size: 16px;
+    font-weight: 300;
     color: #fff;
+    background-color: red;
+    padding-left: 50px;
+    margin-bottom: 80%;
+} */
+
+
+.prerow img {
+    margin-top:20px;
+    width: 85%;
+    height: auto;
+}
+.gs,.us{
+    margin-bottom:20px ;
+    font-weight: 300;
+    font-size: 20px;
 }
 /*responsive-----------------------------------------------------------------------------------------------------*/
 
@@ -214,7 +241,7 @@ nav h1{
         flex-direction: column;
     
     }
-    .col-one h2{
+    /* .col-one h2{
         text-align: center;
         font-size: 15px;
         font-weight: 400;
@@ -225,7 +252,7 @@ nav h1{
         font-size: 15px;
         font-weight: 400;
         color: #fff;
-    }
+    } */
 }
 /*---------------------------------------------------------------------------------------------------------------*/
 /*Reconstruction*/
@@ -249,13 +276,32 @@ nav h1{
     font-weight: 300;
     line-height: 22px;
     padding: 10px;
+    margin-bottom: 30px;
 }
-.row-two{
-    margin-top: 5%;
-    display: flex;
-    justify-content: space-between;
+.row h2{
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: indianred;
+    display: block;
 
 }
+.rg{
+    display: block;
+}
+.ru{
+    display: block;
+}
+/* .row-two{
+    display: flex;
+
+}
+.row img {
+    margin-top:20px;
+    width: 70%;
+    height: auto;
+    display: block;
+} */
 /*-----------------------------------------------------------------------------------------------------------*/
 /*reconstruction responsive*/
 @media(max-width:1300px){
@@ -272,7 +318,46 @@ nav h1{
         padding: 10px;
     }
 
-    .row-two{
+    /* .row-two{
         flex-direction: column;
+    }
+    .row h2{
+        text-align: center;
+        font-size: 12px;
+        font-weight: 400;
+        color: indianred;
+        display: block;
+    
+    }
+    .row img{
+        display: block;
+    
+    }*/
+} 
+
+.video{
+    background-color: #272334;
+    padding-top:5% ;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+}
+.video h2{
+    margin-top: 40px;
+    font-size: 36px;
+    font-weight: 600;
+    color: #fff;
+}
+video{
+    margin-top: 50px;
+    width: 90%;
+}
+
+@media(max-width:700px){
+    .video h2{
+        margin-top: 40px;
+        font-size: 24px;
+        font-weight: 600;
+        color: #fff;
     }
 }
