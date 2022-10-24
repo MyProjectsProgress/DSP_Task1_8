@@ -4,6 +4,7 @@ from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
 
@@ -31,10 +32,13 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
+    
     frequency = st.sidebar.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box') 
     amplitude = st.sidebar.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
-    add_button = st.sidebar.button('Add Signal', key="Save Button") 
+    col1,col2 = st.sidebar.columns([1,1])
+
+    add_button = col1.button('Add', key="Save Button") 
     if add_button:
         total_signals = adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis)
 
@@ -49,7 +53,7 @@ def add_signal(df):
         removed_signal_freq = float(splitting_menu_contents[1]) 
         removed_signal_amp = float(splitting_menu_contents[3]) 
 
-    remove_button = st.sidebar.button('Remove Signal', key="Remove Button") 
+    remove_button = col2.button('Remove', key="Remove Button") 
 
     if remove_button and len(list_of_objects)>0:
         total_signals = removing_sin_waves(df,removed_signal_freq,removed_signal_amp) 
@@ -59,16 +63,17 @@ def add_signal(df):
 # ------------------------------------------------------------------------------------Data Frame Sampling
 def signal_sampling(df,added_signals):
 
-    original_graph_checkbox = st.checkbox('Original Graph',value=True, key='Original_Graph 123')
-    interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
-    noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432")
-    sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
+    col1,col2,col3,col4 = st.columns([1,1,1,1])
+
+    original_graph_checkbox = col1.checkbox('Original Graph',value=True, key='Original_Graph 123')
+    interpolation_checkbox  = col2.checkbox('Interpolation', key='interpolation_check_box 132')
+    noise_checkbox          = col3.checkbox('Noise', key="Noise Check Box 3432")
+    sampling_checkbox       = col4.checkbox("Sampling Points", key='no yes no')
 
     sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
 
     list_of_columns = df.columns
     df_x_axis = list(df[list_of_columns[0]])
-    df_y_axis = list(df[list_of_columns[1]])
 
     begin_time = df[list_of_columns[0]].iat[0] # begin_time
     end_time = df[list_of_columns[0]].iloc[-1] # end time 
@@ -81,7 +86,6 @@ def signal_sampling(df,added_signals):
         sample_rate = 1 #to avoid error of sample_rate approximation to 0
 
     sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
-    sampled_amplitude = df_y_axis[::sample_rate] 
 
     #Pass array of points , number of rows , number of columns to time_matrix
     time_points = list(df[list_of_columns[0]])
@@ -108,10 +112,12 @@ def signal_sampling(df,added_signals):
     reconstructed_signal = sum(final_matrix, axis=1)
 
     # ------------------------------------------------------------------------------------Signal Plotting 
-    df_x_axis = df[list_of_columns[0]]
-
     fig, axs = plt.subplots()
-    fig.set_size_inches(8, 3)
+    fig.set_size_inches(12, 3.5)
+
+    x_zero_line = linspace(0,2,1000)
+    y_zero_line = zeros(1000)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
 
     if interpolation_checkbox :
         axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
@@ -122,10 +128,10 @@ def signal_sampling(df,added_signals):
     if sampling_checkbox:
         axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
 
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Noised Signal",fontdict = font1)
+    plt.xlim(0,end_time)
+    font1 = {'family':'serif','color':'black','size':20}
+    plt.xlabel("Time (Seconds)",fontdict = font1)
+    plt.ylabel("Amplitude (Volt)",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Adding Noise to Signal

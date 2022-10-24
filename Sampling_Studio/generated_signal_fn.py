@@ -1,28 +1,11 @@
 # ------------------------------------------------------------------------------------Importing liberaries
-from turtle import color
 from matplotlib.lines import lineStyles
 import streamlit as st
 from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc,ceil,meshgrid,hypot
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# ------------------------------------------------------------------------------------Sin Plotting Signal
-def sin_signal_viewer():
-    time = linspace(0, 2, 1000)
-    frequency = st.sidebar.slider(label='Frequency (Hz)', min_value=1, max_value=50, step=1)
-    amplitude = st.sidebar.slider(label='Amplitude (m)', min_value=1, max_value=50, step=1)
-    sin_signal = amplitude*sin(2*pi*frequency*time) 
-
-    fig, axs = plt.subplots()
-    fig.set_size_inches(11, 4)
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    axs.plot(time, sin_signal)
-    plt.title("Sin Wave Signal",fontdict = font1)
-    
-    st.plotly_chart(fig,use_container_width=True)
-
+col1,col2,col3 = st.columns([1,4,1])
 # ------------------------------------------------------------------------------------General Plotting Signal
 def general_signal_plotting(x_axis,y_axis):
     fig, axs = plt.subplots()
@@ -33,7 +16,6 @@ def general_signal_plotting(x_axis,y_axis):
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Composed Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
-
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
 initial_time = linspace(0,2, 1000)
@@ -106,7 +88,6 @@ def removing_signal(removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Sampling Added Signals
 def Sampling_added_signals(total_signals):
 
-
     N,I = st.sidebar.columns(2)
     contain = st.container()
 
@@ -158,11 +139,10 @@ def Sampling_added_signals(total_signals):
 
     if sampling:
         axs.plot(sampled_time_axis, sampled_signals, color='green' , marker="o" ,linestyle="" ,alpha=0.7)
-    
-    
-    x = linspace(0,2,1000)
-    y = zeros(1000)
-    axs.plot(x , y, color='grey', alpha = 0.5)
+
+    x_zero_line = linspace(0,2,1000)
+    y_zero_line = zeros(1000)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
 
     plt.xlim(0,2)
     font1 = {'family':'serif','color':'white','size':20}
@@ -174,14 +154,10 @@ def Sampling_added_signals(total_signals):
 def add_noise():
 
     SNR = st.sidebar.slider(label='SNR', min_value=1, max_value=50, value=25, step=1)
-
     signal_power = total_signals **2                                    # Generating the signal power
-    
     signal_power_avg = mean(signal_power)                               # mean of signal power
-
     noise_power = signal_power_avg / SNR
     mean_noise = 0
     noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
     noise_signal = total_signals + noise
-
     return noise_signal
