@@ -23,8 +23,8 @@ class Signal:
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
     global total_signals
-    col11,col22 = st.columns([1,1])
-    col1,col2,col3 = st.columns([1,1,1])
+    # col11,col22 = st.columns([1,1])
+    # col1,col2,col3 = st.columns([1,1,1])
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
@@ -40,10 +40,10 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
-    frequency = col11.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box') 
-    amplitude = col22.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
+    frequency = st.sidebar.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box') 
+    amplitude = st.sidebar.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
-    add_button = col1.button('Add Signal', key="Save Button") 
+    add_button = st.sidebar.button('Add Signal', key="Save Button") 
     if add_button:
         total_signals = adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis)
 
@@ -58,7 +58,7 @@ def add_signal(df):
         removed_signal_freq = float(splitting_menu_contents[1]) 
         removed_signal_amp = float(splitting_menu_contents[3]) 
 
-    remove_button = col3.button('Remove Signal', key="Remove Button") 
+    remove_button = st.sidebar.button('Remove Signal', key="Remove Button") 
 
     if remove_button and len(list_of_objects)>0:
         total_signals = removing_signal(df,removed_signal_freq,removed_signal_amp) 
@@ -67,7 +67,7 @@ def add_signal(df):
     fig.set_size_inches(8, 4)
     
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time",fontdict = font1)
+    plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Uploaded Signal",fontdict = font1)
     axs.plot(corresponding_x_axis, total_signals)
@@ -91,7 +91,7 @@ def general_signal_plotting(x_axis,y_axis):
     fig, axs = plt.subplots()
     fig.set_size_inches(8, 3)
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time",fontdict = font1)
+    plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     axs.plot(x_axis, y_axis)
     plt.title("Reconstructed Signal",fontdict = font1)
@@ -108,7 +108,7 @@ def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
     axs.plot(df_x_axis, df_y_axis)
     axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
     font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time",fontdict = font1)
+    plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Noised Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
