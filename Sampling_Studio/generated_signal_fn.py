@@ -29,7 +29,7 @@ class Signal:
 # ------------------------------------------------------------------------------------Adding Signals
 def add_signal():
     col1,col2 = st.sidebar.columns(2)
-    col11,col22 = st.sidebar.columns([3,1])
+    col11,col22,col33 = st.sidebar.columns([4,1,1])
     with col1:
         frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box 22234') 
     with col2:
@@ -51,8 +51,8 @@ def add_signal():
     if len(splitting_menu_contents)==4: 
         removed_signal_freq = float(splitting_menu_contents[1]) 
         removed_signal_amp = float(splitting_menu_contents[3])
-    with col22:
-        remove_button = st.button('Clear', key="Remove Button 22")
+    with col33:
+        remove_button = st.button('Del', key="Remove Button 22")
     if remove_button and len(list_of_objects)>0: 
         removing_signal(removed_signal_freq,removed_signal_amp) 
         st.experimental_rerun()
@@ -88,15 +88,15 @@ def removing_signal(removed_freq,removed_amp):
 # ------------------------------------------------------------------------------------Sampling Added Signals
 def Sampling_added_signals(total_signals):
 
-    N,I = st.sidebar.columns(2)
     contain = st.container()
-
-    Original_Graph = st.checkbox('Original Graph',value=True,key='Original_Graph 123')
+    O,I,N,S = st.columns(4)
+    with O:
+        Original_Graph = st.checkbox('Original Graph',value=True,key='Original_Graph 123')
     with I:
         interpolation_check_box = st.checkbox('Interpolation',key='interpolation_check_box 132')
     with N:
-        noise = st.checkbox('Noise' ,key="Noise Check Box 3432")
-    with N:
+        noise = st.checkbox('Noise' ,key="Noise Check Box 3432",value = True)
+    with S:
         sampling = st.checkbox('Sampling Points' ,key="sampling Check Box 4232")
 
     sampling_method = st.sidebar.selectbox("The way of sampling",["Using F.maximum","Using sampling frequency"])
