@@ -32,12 +32,14 @@ def add_signal(df):
             total_signals += signal_y_axis
 
     col1,col2 = st.sidebar.columns(2)
+    col11,col22,col33 = st.sidebar.columns([4,1,1])
     with col1:
         frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box')
     with col2: 
         amplitude = st.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
-    add_button = st.sidebar.button('Add Signal', key="Save Button") 
+    with col22:
+        add_button = st.button('Add', key="Save Button") 
     if add_button:
         total_signals = adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis)
 
@@ -45,14 +47,15 @@ def add_signal(df):
     splitting_menu_contents = [] 
     for object in list_of_objects: 
         signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}') 
-    
-    signals_names = st.sidebar.selectbox('Your Signals',signals_menu) 
+    with col11:
+        signals_names = st.selectbox('Your Signals',signals_menu) 
     splitting_menu_contents = str(signals_names).split(' ')
     if len(splitting_menu_contents)==4:  
         removed_signal_freq = float(splitting_menu_contents[1]) 
         removed_signal_amp = float(splitting_menu_contents[3]) 
 
-    remove_button = st.sidebar.button('Remove Signal', key="Remove Button") 
+    with col33:
+        remove_button = st.button('Del', key="Remove Button") 
 
     if remove_button and len(list_of_objects)>0:
         total_signals = removing_sin_waves(df,removed_signal_freq,removed_signal_amp) 
@@ -69,7 +72,7 @@ def signal_sampling(df,added_signals):
     with I:
         interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
     with N:
-        noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432")
+        noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432",value=True)
     with S:
         sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
 
@@ -96,7 +99,7 @@ def signal_sampling(df,added_signals):
     time_points = list(df[list_of_columns[0]])
     time_matrix = resize(time_points, (len(sampled_time), len(time_points))) # Matrix containing all Timepoints
 
-    # The following equations is according to White- Shannon interpoltion formula ((t- nT)/T)
+    # The following equations is according to black- Shannon interpoltion formula ((t- nT)/T)
     K = (time_matrix.T - sampled_time) / (sampled_time[1] - sampled_time[0]) # Transpose for time_matrix is a must for proper calculations (broadcasting)
 
     if noise_checkbox:
@@ -131,7 +134,7 @@ def signal_sampling(df,added_signals):
     if sampling_checkbox:
         axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
 
-    font1 = {'family':'serif','color':'white','size':20}
+    font1 = {'family':'serif','color':'black','size':20}
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Noised Signal",fontdict = font1)
