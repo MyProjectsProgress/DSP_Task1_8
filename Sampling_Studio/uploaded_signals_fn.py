@@ -134,6 +134,7 @@ def signal_sampling(df,added_signals):
     if sampling_checkbox:
         axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
 
+    plt.xlim(0,end_time)
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
