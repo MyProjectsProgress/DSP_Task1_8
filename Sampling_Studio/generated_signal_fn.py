@@ -95,7 +95,7 @@ def Sampling_added_signals(total_signals):
     with I:
         interpolation_check_box = st.checkbox('Interpolation',key='interpolation_check_box 132')
     with N:
-        noise = st.checkbox('Noise' ,key="Noise Check Box 3432",value = True)
+        noise = st.checkbox('Noise' ,key="Noise Check Box 3432")
     with S:
         sampling = st.checkbox('Sampling Points' ,key="sampling Check Box 4232")
 
