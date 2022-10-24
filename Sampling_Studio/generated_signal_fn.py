@@ -108,12 +108,12 @@ def Sampling_added_signals(total_signals):
     sampling_frequency = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, value=1, step=1)
     sampling_period=1/sampling_frequency
 
-    sample_rate = int((1000/2)/(sampling_frequency))
+    sample_rate = int((1000/2)/(sampling_frequency)) #sample step (on the x_axis), (number of points/time range)/sampling frequency
     if sample_rate == 0:
         sample_rate = 1
     
     time_axis      = linspace(-1, 1, 1000)                 
-    sampled_time_axis      = time_axis[::sample_rate]  
+    sampled_time_axis      = time_axis[::sample_rate]  #picking sample points
 
     fig, axs = plt.subplots()
     fig.set_size_inches(11, 3)
@@ -128,8 +128,8 @@ def Sampling_added_signals(total_signals):
     if noise and interpolation_check_box and Original_Graph :
 
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
-        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
-        final_matrix = noise_sampled_y_axis * sinc(K)
+        inital_matrix = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = noise_sampled_y_axis * sinc(inital_matrix)
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
@@ -139,8 +139,8 @@ def Sampling_added_signals(total_signals):
     elif noise and interpolation_check_box :
 
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
-        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
-        final_matrix = noise_sampled_y_axis * sinc(K)
+        inital_matrix = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = noise_sampled_y_axis * sinc(inital_matrix)
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(sampled_time_axis, noise_sampled_y_axis ,color='yellow' ,marker="o" ,linestyle='',alpha=0.5)
@@ -149,15 +149,15 @@ def Sampling_added_signals(total_signals):
     elif noise and Original_Graph :
 
         total_signals_sampled= total_signals[::sample_rate]
-        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=0.7)
-        axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=1)
+        axs.plot(sampled_time_axis, total_signals_sampled ,color='yellow' ,marker="o" ,linestyle='',alpha=1)
+        axs.plot(time_axis,noise_signal, color='royalblue' ,linewidth=1,  alpha=0.5)
 
     elif interpolation_check_box and Original_Graph :
 
         total_signals_sampled= total_signals[::sample_rate]
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
-        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
-        final_matrix = total_signals_sampled * sinc(K)
+        inital_matrix = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = total_signals_sampled * sinc(inital_matrix)
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.9)
@@ -171,8 +171,11 @@ def Sampling_added_signals(total_signals):
 
         total_signals_sampled= total_signals[::sample_rate]
         time_matrix = resize(time_axis, (len(sampled_time_axis), len(time_axis)))
-        K = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
-        final_matrix = total_signals_sampled * sinc(K)
+        inital_matrix = (time_matrix.T - sampled_time_axis) / (sampled_time_axis[1] - sampled_time_axis[0])
+        final_matrix = total_signals_sampled * sinc(inital_matrix)
+        # st.write(time_matrix)
+        # st.write(inital_matrix)
+        # st.write(final_matrix)
         reconstructed_signal = sum(final_matrix, axis=1)
 
         axs.plot(time_axis,reconstructed_signal,color='Red',alpha = 1)
