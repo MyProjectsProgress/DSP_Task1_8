@@ -106,3 +106,7 @@ p {
   left: -20px;
   margin-bottom: 10px;
 } */
+.row-widget.stButton{
+  position: relative;
+  margin-top: 35px;
+}

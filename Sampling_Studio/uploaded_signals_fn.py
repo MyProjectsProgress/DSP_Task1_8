@@ -31,8 +31,11 @@ def add_signal(df):
             signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
             total_signals += signal_y_axis
 
-    frequency = st.sidebar.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box') 
-    amplitude = st.sidebar.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
+    col1,col2 = st.sidebar.columns(2)
+    with col1:
+        frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box')
+    with col2: 
+        amplitude = st.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
     add_button = st.sidebar.button('Add Signal', key="Save Button") 
     if add_button:
@@ -59,10 +62,16 @@ def add_signal(df):
 # ------------------------------------------------------------------------------------Data Frame Sampling
 def signal_sampling(df,added_signals):
 
-    original_graph_checkbox = st.checkbox('Original Graph',value=True, key='Original_Graph 123')
-    interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
-    noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432")
-    sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
+    contain = st.container()
+    O,I,N,S = st.columns(4)
+    with O:
+        original_graph_checkbox = st.checkbox('Original Graph',value=True, key='Original_Graph 123')
+    with I:
+        interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
+    with N:
+        noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432")
+    with S:
+        sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
 
     sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
 
@@ -126,7 +135,7 @@ def signal_sampling(df,added_signals):
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Noised Signal",fontdict = font1)
-    st.plotly_chart(fig,use_container_width=True)
+    contain.plotly_chart(fig,use_container_width=True)
 
 # ------------------------------------------------------------------------------------Adding Noise to Signal
 def add_noise():
