@@ -151,19 +151,18 @@ def Sampling_added_signals(total_signals):
     fig.set_size_inches(11, 3.5)
 
     if interpolation_check_box:
-
-        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=1)
 
     if Original_Graph:
         axs.plot(time_axis,total_signals, color='royalblue')
 
     if sampling:
-        axs.plot(sampled_time_axis, sampled_signals, color='yellow' , marker="o" ,linestyle="")
+        axs.plot(sampled_time_axis, sampled_signals, color='green' , marker="o" ,linestyle="" ,alpha=0.7)
     
     
     x = linspace(0,2,1000)
     y = zeros(1000)
-    axs.plot(x,y,color='grey',alpha = 0.5)
+    axs.plot(x , y, color='grey', alpha = 0.5)
 
     plt.xlim(0,2)
     font1 = {'family':'serif','color':'white','size':20}
