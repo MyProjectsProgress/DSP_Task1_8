@@ -4,14 +4,6 @@ from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
 import matplotlib.pyplot as plt
 import pandas as pd
 
-# ------------------------------------------------------------------------------------Getters
-def get_data_frame(df):
-    
-    list_of_columns = df.columns
-    df_x_axis = df[list_of_columns[0]]
-    df_y_axis = df[list_of_columns[1]]
-    return df_x_axis,df_y_axis
-
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
 
@@ -20,15 +12,14 @@ class Signal:
     def __init__(self,amplitude,frequency):
         self.amplitude = amplitude 
         self.frequency = frequency
+
 # ------------------------------------------------------------------------------------Adding & Removing Signal Function 
 def add_signal(df):
     global total_signals
-    # col11,col22 = st.columns([1,1])
-    # col1,col2,col3 = st.columns([1,1,1])
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
-    corresponding_x_axis = linspace(-3,3, len(df_y_axis))
+    corresponding_x_axis = linspace(0,2, len(df_y_axis))
 
     if len(list_of_objects)==0: 
         total_signals = df_y_axis
@@ -61,17 +52,98 @@ def add_signal(df):
     remove_button = st.sidebar.button('Remove Signal', key="Remove Button") 
 
     if remove_button and len(list_of_objects)>0:
-        total_signals = removing_signal(df,removed_signal_freq,removed_signal_amp) 
+        total_signals = removing_sin_waves(df,removed_signal_freq,removed_signal_amp) 
+        st.experimental_rerun()
+    return total_signals
+
+# ------------------------------------------------------------------------------------Data Frame Sampling
+def signal_sampling(df,added_signals):
+
+    original_graph_checkbox = st.checkbox('Original Graph',value=True, key='Original_Graph 123')
+    interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
+    noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432")
+    sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
+
+    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
+
+    list_of_columns = df.columns
+    df_x_axis = list(df[list_of_columns[0]])
+    df_y_axis = list(df[list_of_columns[1]])
+
+    begin_time = df[list_of_columns[0]].iat[0] # begin_time
+    end_time = df[list_of_columns[0]].iloc[-1] # end time 
+
+    time_range = abs(begin_time - end_time)
+
+    sample_rate = int((len(df_x_axis)/time_range)/(sample_freq)) #hakhod sample kol 150 no2ta msln 900pt-- 6 sec 
+
+    if sample_rate == 0:
+        sample_rate = 1 #to avoid error of sample_rate approximation to 0
+
+    sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
+    sampled_amplitude = df_y_axis[::sample_rate] 
+
+    #Pass array of points , number of rows , number of columns to time_matrix
+    time_points = list(df[list_of_columns[0]])
+    time_matrix = resize(time_points, (len(sampled_time), len(time_points))) # Matrix containing all Timepoints
+
+    # The following equations is according to White- Shannon interpoltion formula ((t- nT)/T)
+    K = (time_matrix.T - sampled_time) / (sampled_time[1] - sampled_time[0]) # Transpose for time_matrix is a must for proper calculations (broadcasting)
+
+    if noise_checkbox:
+        #------------------- adding and sampling noise 
+        noised_signal = add_noise()
+        total_signals=list(noised_signal)
+        sampled_signals = total_signals[::sample_rate]
+        #------------------Reconstructed  signals of noise
+        final_matrix = sampled_signals * sinc(K)
+
+    else:
+        #----------------- sampling signals without noise
+        total_signals = list(added_signals)
+        sampled_signals = total_signals[::sample_rate]
+        # --------------Data Frame Reconstructing without noise
+        final_matrix = sampled_signals * sinc(K)
+
+    reconstructed_signal = sum(final_matrix, axis=1)
+
+    # ------------------------------------------------------------------------------------Signal Plotting 
+    df_x_axis = df[list_of_columns[0]]
 
     fig, axs = plt.subplots()
-    fig.set_size_inches(8, 4)
+    fig.set_size_inches(8, 3)
+
+    if interpolation_checkbox :
+        axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
     
+    if original_graph_checkbox:
+        axs.plot(time_points,total_signals, color='royalblue')
+    
+    if sampling_checkbox:
+        axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
+
     font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Uploaded Signal",fontdict = font1)
-    axs.plot(corresponding_x_axis, total_signals)
+    plt.title("Noised Signal",fontdict = font1)
     st.plotly_chart(fig,use_container_width=True)
+
+# ------------------------------------------------------------------------------------Adding Noise to Signal
+def add_noise():
+    global noise
+
+    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=0.0, step=0.1)
+    signal_power = total_signals **2                                    # Generating the signal power
+    signal_power_avg = mean(signal_power)                               # mean of signal power
+    if (SNR==0):
+        noise_power = signal_power_avg / 0.00001
+    else:
+        noise_power = signal_power_avg / SNR
+    mean_noise = 0
+    noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
+    noise_signal = total_signals + noise
+
+    return noise_signal
 
 # ------------------------------------------------------------------------------------Adding Sin Waves
 def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
@@ -85,41 +157,12 @@ def adding_sin_waves(frequency,amplitude,df_y_axis,corresponding_x_axis):
         total_signals += signal_y_axis
     return total_signals
 
-# ------------------------------------------------------------------------------------General Plotting Signal
-def general_signal_plotting(x_axis,y_axis):
-
-    fig, axs = plt.subplots()
-    fig.set_size_inches(8, 3)
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    axs.plot(x_axis, y_axis)
-    plt.title("Reconstructed Signal",fontdict = font1)
-    st.plotly_chart(fig,use_container_width=True)
-
-# ------------------------------------------------------------------------------------General Plotting Signal
-def sampling_signal_plotting(df,df_y_axis,x_sampled_axis,y_sampled_axis):
-
-    list_of_columns = df.columns
-    df_x_axis = df[list_of_columns[0]]
-
-    fig, axs = plt.subplots()
-    fig.set_size_inches(8, 3)
-    axs.plot(df_x_axis, df_y_axis)
-    axs.plot(x_sampled_axis, y_sampled_axis,marker='o',linestyle='')
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Noised Signal",fontdict = font1)
-    st.plotly_chart(fig,use_container_width=True)
-
-
-# ------------------------------------------------------------------------------------Removing Signal
-def removing_signal(df,removed_freq,removed_amp):
+# ------------------------------------------------------------------------------------Removing Sin Waves
+def removing_sin_waves(df,removed_freq,removed_amp):
 
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
-    corresponding_x_axis = linspace(-1,1, len(df_y_axis))
+    corresponding_x_axis = linspace(0, 2, len(df_y_axis))
 
     total_signals = df_y_axis
     for object in list_of_objects:
@@ -134,70 +177,3 @@ def removing_signal(df,removed_freq,removed_amp):
         total_signals += signal_y_axis
 
     return total_signals
-
-# ------------------------------------------------------------------------------------Adding Noise Signal
-def add_noise():
-
-    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=0.0, step=0.1)
-
-    signal_power = total_signals **2                                    # Generating the signal power
-    
-    signal_power_avg = mean(signal_power)                               # mean of signal power
-
-    if (SNR==0):
-        noise_power = signal_power_avg / 0.00001
-    else:
-        noise_power = signal_power_avg / SNR
-    mean_noise = 0
-    noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
-    noise_signal = total_signals + noise
-
-    return noise_signal
-
-# ------------------------------------------------------------------------------------Data Frame Sampling
-def signal_sampling(df):
-
-    list_of_columns = df.columns
-    global noise
-    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
-    noise       = st.sidebar.checkbox('Add Noise', key='14412')
-    if noise:
-        df_y_axis=add_noise()
-        df_y_axis=list(df_y_axis)
-    else:
-        df_y_axis = list(df[list_of_columns[1]])
-    df_x_axis = list(df[list_of_columns[0]])
-
-    begin_time = df[list_of_columns[0]].iat[0] # begin_time
-    end_time = df[list_of_columns[0]].iloc[-1] # end time 
-
-    time_range = abs(begin_time - end_time)
-
-    sample_rate = int((len(df_x_axis)/time_range)/(sample_freq)) #hakhod sample kol 150 no2ta msln 900pt-- 6 sec 
-
-    if sample_rate == 0:
-        sample_rate = 1 #to avoid error of sample_rate approximation to 0
-
-    sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
-    sampled_amplitude = df_y_axis[::sample_rate] 
-    
-    return sampled_amplitude, sampled_time , df_y_axis
-
-# ------------------------------------------------------------------------------------Data Frame Reconstructing
-def signal_reconstructing(df, sampled_time, sampled_amplitude):
-
-    list_of_columns = df.columns
-    time_points = list(df[list_of_columns[0]])
-    time_matrix = resize(time_points, (len(sampled_time), len(time_points))) # Matrix containing all Timepoints
-    #Pass array of points , number of rows , number of columns to time_matrix
-    
-    # The following equations is according to White- Shannon interpoltion formula ((t- nT)/T)
-    K = (time_matrix.T - sampled_time) / (sampled_time[1] - sampled_time[0]) # Transpose for time_matrix is a must for proper calculations (broadcasting)
-
-    # Reconstructed Amplitude = x[n] sinc(v) -- Whitetaker Shannon
-    final_matrix = sampled_amplitude * sinc(K)
-
-    # Summation of columns of the final matrix to get an array of reconstructed points
-    reconstructed_signal = sum(final_matrix, axis=1)
-
-    return time_points,reconstructed_signal
