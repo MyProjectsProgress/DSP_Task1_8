@@ -6,7 +6,9 @@ import generated_signal_fn as GSF
 import numpy as np
 
 # ------------------------------------------------------------------------------------Front end 
+
 st.set_page_config(layout="wide")
+container = st.sidebar.container()
 #  autorangeChart() {
 #         Plotly.relayout('plotly', {
 #             'xaxis.autorange': true,
@@ -47,7 +49,7 @@ def generated_signal_studio():
 
 # ------------------------------------------------------------------------------------Radio Buttons
 if options == 'Uploaded Signal Studio':
-    dataset = st.sidebar.file_uploader("", type = ['csv'])
+    dataset = container.file_uploader("", type = ['csv'])
     uploaded_signal_studio()
 elif options == 'Signal Generation Studio':
     generated_signal_studio()
