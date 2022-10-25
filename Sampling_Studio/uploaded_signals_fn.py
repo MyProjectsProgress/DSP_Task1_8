@@ -127,25 +127,26 @@ def signal_sampling(df,added_signals):
 
     x_zero_line = linspace(0,2,1000)
     y_zero_line = zeros(1000)
-    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.2)
 
     if interpolation_checkbox :
-        axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
+        axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=1,label="Reconstructed")
     
     if original_graph_checkbox:
-        axs.plot(time_points,total_signals, color='royalblue')
+        axs.plot(time_points,total_signals, color='darkslategrey',alpha=0.5,label="Original")
     
     if sampling_checkbox:
-        axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
-    
+        axs.plot(sampled_time, sampled_signals, color='teal' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled")
+
     x_zero_line = linspace(0,2,1000)
     y_zero_line = zeros(1000)
-    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
+    axs.plot(x_zero_line , y_zero_line, color='whitesmoke', alpha = 0.2)
 
     plt.xlim(0,end_time)
     font1 = {'family':'serif','color':'black','size':20}
     plt.xlabel("Time (Seconds)",fontdict = font1)
     plt.ylabel("Amplitude (Volt)",fontdict = font1)
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5,0.5,0.7),fontsize = 11)
     contain.plotly_chart(fig,use_container_width=True)
 
     return reconstructed_signal,end_time,begin_time
@@ -153,7 +154,6 @@ def signal_sampling(df,added_signals):
 # ------------------------------------------------------------------------------------Adding Noise to Signal
 def add_noise():
     global noise
-
     SNR = st.sidebar.slider(label='SNR', min_value=0, max_value=50, value=0, step=1)
     signal_power = total_signals **2                                    # Generating the signal power
     signal_power_avg = mean(signal_power)                               # mean of signal power
@@ -164,7 +164,6 @@ def add_noise():
     mean_noise = 0
     noise = random.normal(mean_noise,sqrt(noise_power),len(total_signals))
     noise_signal = total_signals + noise
-
     return noise_signal
 
 # ------------------------------------------------------------------------------------Adding Sin Waves
@@ -185,17 +184,14 @@ def removing_sin_waves(df,removed_freq,removed_amp):
     list_of_columns = df.columns
     df_y_axis = df[list_of_columns[1]]
     corresponding_x_axis = linspace(0, 2, len(df_y_axis))
-
     total_signals = df_y_axis
     for object in list_of_objects:
         if removed_freq == object.frequency and removed_amp == object.amplitude:
             list_of_objects.remove(object)
             break
-
     for object in list_of_objects:
         object_frequency = object.frequency
         object_amplitude = object.amplitude
         signal_y_axis = object_amplitude*sin(2*pi*object_frequency*corresponding_x_axis)
         total_signals += signal_y_axis
-
     return total_signals

@@ -93,7 +93,7 @@ def Sampling_added_signals(total_signals):
         sampling_frequency = st.sidebar.slider(label= "Sampling Frequency (Hz)",min_value=1,max_value=100,value=1,step=1)
     else:
         sampling_frequency=1
-        
+
     sample_rate = int((1000/2)/(sampling_frequency))
     time_axis = linspace(0, 2, 1000)
     sampled_time_axis= time_axis[::sample_rate]
@@ -120,25 +120,27 @@ def Sampling_added_signals(total_signals):
     fig.set_size_inches(11, 3.5)
 
     if interpolation_check_box:
-        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=1)
+        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=1,label="Reconstructed")
 
     if Original_Graph:
-        axs.plot(time_axis,total_signals, color='royalblue')
+        axs.plot(time_axis,total_signals, color='darkslategrey',alpha=0.5,label="Original")
 
     if sampling:
-        axs.plot(sampled_time_axis, sampled_signals, color='green' , marker="o" ,linestyle="" ,alpha=0.7)
+        axs.plot(sampled_time_axis, sampled_signals, color='teal' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled")
 
     x_zero_line = linspace(0,2,1000)
     y_zero_line = zeros(1000)
-    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.2)
 
     plt.xlim(0,2)
     font1 = {'family':'serif','color':'black','size':20}
     plt.xlabel("Time (Seconds)",fontdict = font1)
     plt.ylabel("Amplitude (Volt)",fontdict = font1)
+    plt.legend(loc='center left', bbox_to_anchor=(1, 0.5,0.5,0.7),fontsize = 11)
     contain.plotly_chart(fig,use_container_width=True)
 
     return reconstructed_signal
+
 # ------------------------------------------------------------------------------------Adding Noise
 def add_noise():
 
