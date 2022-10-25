@@ -4,6 +4,7 @@ from numpy import sin,pi,linspace,zeros,arange,mean,sqrt,random,resize,sum,sinc
 import matplotlib.pyplot as plt
 import pandas as pd
 
+
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
 
@@ -80,7 +81,6 @@ def signal_sampling(df,added_signals):
 
     list_of_columns = df.columns
     df_x_axis = list(df[list_of_columns[0]])
-    df_y_axis = list(df[list_of_columns[1]])
 
     begin_time = df[list_of_columns[0]].iat[0] # begin_time
     end_time = df[list_of_columns[0]].iloc[-1] # end time 
@@ -93,7 +93,6 @@ def signal_sampling(df,added_signals):
         sample_rate = 1 #to avoid error of sample_rate approximation to 0
 
     sampled_time = df_x_axis[::sample_rate] #list from beign to end of x-axis with step of sample Rate
-    sampled_amplitude = df_y_axis[::sample_rate] 
 
     #Pass array of points , number of rows , number of columns to time_matrix
     time_points = list(df[list_of_columns[0]])
@@ -120,10 +119,12 @@ def signal_sampling(df,added_signals):
     reconstructed_signal = sum(final_matrix, axis=1)
 
     # ------------------------------------------------------------------------------------Signal Plotting 
-    df_x_axis = df[list_of_columns[0]]
-
     fig, axs = plt.subplots()
-    fig.set_size_inches(8, 3)
+    fig.set_size_inches(12, 3.5)
+
+    x_zero_line = linspace(0,2,1000)
+    y_zero_line = zeros(1000)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
 
     if interpolation_checkbox :
         axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=0.7)
@@ -134,7 +135,7 @@ def signal_sampling(df,added_signals):
     if sampling_checkbox:
         axs.plot(sampled_time, sampled_signals, color='yellow' , marker="o" ,linestyle="")
 
-    font1 = {'family':'serif','color':'black','size':20}
+    font1 = {'family':'serif','color':'white','size':20}
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Noised Signal",fontdict = font1)
