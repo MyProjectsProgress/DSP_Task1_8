@@ -6,6 +6,13 @@ import uploaded_signals_fn as USF
 import generated_signal_fn as GSF
 import numpy as np
 
+# ------------------------------------------------------------------------------------Front end 
+
+# container = st.sidebar.container()
+
+with open("design.css") as source_ds:
+    st.markdown(f"<style>{source_ds.read()}</style>",unsafe_allow_html=True)
+
 # ------------------------------------------------------------------------------------ User Options
 dataset = st.file_uploader(label="Uploading Signal", type = ['csv'])
 

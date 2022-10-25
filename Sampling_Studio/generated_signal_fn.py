@@ -135,7 +135,7 @@ def Sampling_added_signals(total_signals):
     axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
 
     plt.xlim(0,2)
-    font1 = {'family':'serif','color':'white','size':20}
+    font1 = {'family':'serif','color':'black','size':20}
     plt.xlabel("Time (seconds)",fontdict = font1)
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Reconstructed Signal",fontdict = font1)
