@@ -125,22 +125,18 @@ def signal_sampling(df,added_signals):
     fig, axs = plt.subplots()
     fig.set_size_inches(12, 3.5)
 
-    x_zero_line = linspace(0,2,1000)
-    y_zero_line = zeros(1000)
-    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.2)
-
     if interpolation_checkbox :
-        axs.plot(time_points,reconstructed_signal,color='Red',linestyle='dashed',alpha=1,label="Reconstructed")
+        axs.plot(time_points,reconstructed_signal,color='red',alpha=1,label="Reconstructed",linewidth=2)
     
     if original_graph_checkbox:
         axs.plot(time_points,total_signals, color='darkslategrey',alpha=0.5,label="Original")
     
     if sampling_checkbox:
-        axs.plot(sampled_time, sampled_signals, color='teal' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled")
+        axs.plot(sampled_time, sampled_signals, color='black' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled",markersize=4)
 
     x_zero_line = linspace(0,2,1000)
     y_zero_line = zeros(1000)
-    axs.plot(x_zero_line , y_zero_line, color='whitesmoke', alpha = 0.2)
+    axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.2)
 
     plt.xlim(0,end_time)
     font1 = {'family':'serif','color':'black','size':20}

@@ -120,13 +120,13 @@ def Sampling_added_signals(total_signals):
     fig.set_size_inches(11, 3.5)
 
     if interpolation_check_box:
-        axs.plot(time_axis,reconstructed_signal,color='Red',linestyle='dashed',alpha=1,label="Reconstructed")
+        axs.plot(time_axis,reconstructed_signal,color='red',alpha=1,label="Reconstructed",linewidth=2)
 
     if Original_Graph:
         axs.plot(time_axis,total_signals, color='darkslategrey',alpha=0.5,label="Original")
 
     if sampling:
-        axs.plot(sampled_time_axis, sampled_signals, color='teal' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled")
+        axs.plot(sampled_time_axis, sampled_signals, color='black' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled",markersize=4)
 
     x_zero_line = linspace(0,2,1000)
     y_zero_line = zeros(1000)
