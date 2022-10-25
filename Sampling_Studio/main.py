@@ -19,18 +19,18 @@ dataset = st.file_uploader(label="Uploading Signal", type = ['csv'])
 # ------------------------------------------------------------------------------------Uploaded Signal Studio
 def generated_signal_studio():
     total_signals=GSF.add_signal()
-    GSF.Sampling_added_signals(total_signals)
+    reconstructed_signal = GSF.Sampling_added_signals(total_signals)
+    time = np.linspace(0,2,1000)
+    df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': reconstructed_signal}, columns=['Time (sc)','Amplitudes (m)'])
+    st.sidebar.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 1999")
 
 if dataset is not None:
     df = pd.read_csv(dataset)
     total_signals = USF.add_signal(df)
-    USF.signal_sampling(df,total_signals)
+    reconstructed_signal,end_time,begin_time = USF.signal_sampling(df,total_signals)
+    time = np.linspace(begin_time,end_time,len(reconstructed_signal))
+    df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': reconstructed_signal}, columns=['Time (sc)','Amplitudes (m)'])
+    st.sidebar.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 2022")
     # st.sidebar.download_button('Download Your Data', df.to_csv(),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 42332")
 else:
     generated_signal_studio()
-
-# ------------------------------------------------------------------------------------Generated Signal Studio
-
-    # time = np.linspace(0,2,1000)
-    # df = pd.DataFrame({'Time (sc)': time, 'Amplitudes (m)': total_signals}, columns=['Time (sc)','Amplitudes (m)'])
-    # st.sidebar.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 11276")

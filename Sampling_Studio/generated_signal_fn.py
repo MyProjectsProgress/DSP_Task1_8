@@ -6,16 +6,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 col1,col2,col3 = st.columns([1,4,1])
-# ------------------------------------------------------------------------------------General Plotting Signal
-def general_signal_plotting(x_axis,y_axis):
-    fig, axs = plt.subplots()
-    fig.set_size_inches(11, 3)
-    axs.plot(x_axis, y_axis)
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Composed Signal",fontdict = font1)
-    st.plotly_chart(fig,use_container_width=True)
 # ------------------------------------------------------------------------------------Setting Global Variables
 list_of_objects = []
 initial_time = linspace(0,2, 1000)
@@ -26,6 +16,7 @@ class Signal:
     def __init__(self,amplitude,frequency):
         self.amplitude = amplitude 
         self.frequency = frequency
+
 # ------------------------------------------------------------------------------------Adding Signals
 def add_signal():
     col1,col2 = st.sidebar.columns(2)
@@ -57,7 +48,6 @@ def add_signal():
         removing_signal(removed_signal_freq,removed_signal_amp) 
         st.experimental_rerun()
 
-    # general_signal_plotting(initial_time,total_signals)
     return total_signals
 # ------------------------------------------------------------------------------------Adding Signals
 def adding_signals(frequency,amplitude):                                              
@@ -150,6 +140,8 @@ def Sampling_added_signals(total_signals):
     plt.ylabel("Amplitude",fontdict = font1)
     plt.title("Reconstructed Signal",fontdict = font1)
     contain.plotly_chart(fig,use_container_width=True)
+
+    return reconstructed_signal
 # ------------------------------------------------------------------------------------Adding Noise
 def add_noise():
 

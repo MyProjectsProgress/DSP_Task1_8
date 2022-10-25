@@ -141,6 +141,8 @@ def signal_sampling(df,added_signals):
     plt.title("Noised Signal",fontdict = font1)
     contain.plotly_chart(fig,use_container_width=True)
 
+    return reconstructed_signal,end_time,begin_time
+
 # ------------------------------------------------------------------------------------Adding Noise to Signal
 def add_noise():
     global noise
