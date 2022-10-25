@@ -26,5 +26,5 @@ else:
     total_signals=GSF.add_signal()
     reconstructed_signal = GSF.Sampling_added_signals(total_signals)
     time = np.linspace(0,2,1000)
-    df = pd.DataFrame({'Time (Sc)': time, 'Amplitudes (V)': reconstructed_signal}, columns=['Time (sc)','Amplitudes (m)'])
+    df = pd.DataFrame({'Time (Sc)': time, 'Amplitudes (V)': reconstructed_signal}, columns=['Time (Sc)','Amplitudes (V)'])
     st.download_button('Download Your Data', df.to_csv(index=False),file_name= f'Data With Code #{randint(0, 1000)}.csv' ,mime = 'text/csv',key="Download Button 1999")

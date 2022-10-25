@@ -134,7 +134,7 @@ def signal_sampling(df,added_signals):
     if sampling_checkbox:
         axs.plot(sampled_time, sampled_signals, color='black' , marker="o" ,linestyle="" ,alpha=0.8,label="Sampled",markersize=4)
 
-    x_zero_line = linspace(0,2,1000)
+    x_zero_line = linspace(0,end_time,1000)
     y_zero_line = zeros(1000)
     axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.2)
 
