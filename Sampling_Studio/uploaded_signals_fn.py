@@ -47,7 +47,7 @@ def add_signal(df):
     signals_menu = [] 
     splitting_menu_contents = [] 
     for object in list_of_objects: 
-        signals_menu.append(f'Frequency {object.frequency} Amplitude {object.amplitude}') 
+        signals_menu.append(f'Freq: {object.frequency} Amp: {object.amplitude}') 
     with col11:
         signals_names = st.selectbox('Your Signals',signals_menu) 
     splitting_menu_contents = str(signals_names).split(' ')
