@@ -37,7 +37,7 @@ def add_signal(df):
     with col1:
         frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box')
     with col2: 
-        amplitude = st.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
+        amplitude = st.slider('Amplitude (Volt)', min_value=1, max_value=50, step=1, key='Amplitude Box') 
 
     with col22:
         add_button = st.button('Add', key="Save Button") 
@@ -69,13 +69,13 @@ def signal_sampling(df,added_signals):
     contain = st.container()
     O,I,N,S = st.columns(4)
     with O:
-        original_graph_checkbox = st.checkbox('Original Graph',value=True, key='Original_Graph 123')
+        original_graph_checkbox = st.checkbox('Show Original Graph',value=True, key='Original_Graph 2001')
     with I:
-        interpolation_checkbox  = st.checkbox('Interpolation', key='interpolation_check_box 132')
+        interpolation_checkbox  = st.checkbox('Show Interpolation', key='interpolation_check_box 2002')
     with N:
-        noise_checkbox          = st.checkbox('Noise', key="Noise Check Box 3432",value=True)
+        noise_checkbox          = st.checkbox('Add Noise', key="Noise Check Box 2003")
     with S:
-        sampling_checkbox       = st.checkbox("Sampling Points", key='no yes no')
+        sampling_checkbox       = st.checkbox("Show Sampling Points", key='2004')
 
     sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
 
@@ -140,10 +140,9 @@ def signal_sampling(df,added_signals):
     axs.plot(x_zero_line , y_zero_line, color='grey', alpha = 0.5)
 
     plt.xlim(0,end_time)
-    font1 = {'family':'serif','color':'white','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Noised Signal",fontdict = font1)
+    font1 = {'family':'serif','color':'black','size':20}
+    plt.xlabel("Time (Seconds)",fontdict = font1)
+    plt.ylabel("Amplitude (Volt)",fontdict = font1)
     contain.plotly_chart(fig,use_container_width=True)
 
     return reconstructed_signal,end_time,begin_time
@@ -152,7 +151,7 @@ def signal_sampling(df,added_signals):
 def add_noise():
     global noise
 
-    SNR = st.sidebar.slider(label='SNR', min_value=0.0, max_value=50.0, value=0.0, step=0.1)
+    SNR = st.sidebar.slider(label='SNR', min_value=0, max_value=50, value=0, step=1)
     signal_power = total_signals **2                                    # Generating the signal power
     signal_power_avg = mean(signal_power)                               # mean of signal power
     if (SNR==0):

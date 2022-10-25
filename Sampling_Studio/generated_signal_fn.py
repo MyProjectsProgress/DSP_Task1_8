@@ -22,9 +22,9 @@ def add_signal():
     col1,col2 = st.sidebar.columns(2)
     col11,col22,col33 = st.sidebar.columns([4,1,1])
     with col1:
-        frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box 22234') 
+        frequency = st.slider('Frequency (Hz)', min_value=1, max_value=50, step=1, key='frequency Box 123') 
     with col2:
-        amplitude = st.slider('Amplitude (m)', min_value=1, max_value=50, step=1, key='Amplitude Box 224') 
+        amplitude = st.slider('Amplitude (Volt)', min_value=1, max_value=50, step=1, key='Amplitude Box 122') 
 
     with col22:
         add_button = st.button('Add', key="Save Button 22") 
@@ -36,7 +36,7 @@ def add_signal():
     for object in list_of_objects: 
         signals_menu.append(f'Freq: {object.frequency} Amp: {object.amplitude}')
     with col11:
-        signals_names = st.selectbox('Your Signals',signals_menu,key="lwflef") 
+        signals_names = st.selectbox('Your Signals',signals_menu,key="Your Signal") 
 
     splitting_menu_contents = str(signals_names).split(' ') 
     if len(splitting_menu_contents)==4: 
@@ -81,21 +81,15 @@ def Sampling_added_signals(total_signals):
     contain = st.container()
     O,I,N,S = st.columns(4)
     with O:
-        Original_Graph = st.checkbox('Original Graph',value=True,key='Original_Graph 123')
+        Original_Graph          = st.checkbox('Show Original Graph',value=True,key='Original_Graph 10')
     with I:
-        interpolation_check_box = st.checkbox('Interpolation',key='interpolation_check_box 132')
+        interpolation_check_box = st.checkbox('Show Interpolation',key='interpolation_check_box 11')
     with N:
-        noise = st.checkbox('Noise' ,key="Noise Check Box 3432")
+        noise                   = st.checkbox('Add Noise' ,key="Noise Check Box 12")
     with S:
-        sampling = st.checkbox('Sampling Points' ,key="sampling Check Box 4232")
-
-    sampling_method = st.sidebar.selectbox("The way of sampling",["Using F.maximum","Using sampling frequency"])
-    if sampling_method == "Using F.maximum":
-        max_freq = st.sidebar.slider(label= "F.maximum (Hz)",min_value=1,max_value=100,value=1,step=1)
-        sampling_frequency = 2 * max_freq
-    elif sampling_method == "Using sampling frequency":
-        sampling_frequency = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, value=1, step=1)
-
+        sampling                = st.checkbox('Show Sampling Points' ,key="sampling Check Box 13")
+    
+    sampling_frequency = st.sidebar.slider(label= "Sampling Frequency (Hz)",min_value=1,max_value=100,value=1,step=1)
     sample_rate = int((1000/2)/(sampling_frequency))
     time_axis = linspace(0, 2, 1000)
     sampled_time_axis= time_axis[::sample_rate]
@@ -136,9 +130,8 @@ def Sampling_added_signals(total_signals):
 
     plt.xlim(0,2)
     font1 = {'family':'serif','color':'black','size':20}
-    plt.xlabel("Time (seconds)",fontdict = font1)
-    plt.ylabel("Amplitude",fontdict = font1)
-    plt.title("Reconstructed Signal",fontdict = font1)
+    plt.xlabel("Time (Seconds)",fontdict = font1)
+    plt.ylabel("Amplitude (Volt)",fontdict = font1)
     contain.plotly_chart(fig,use_container_width=True)
 
     return reconstructed_signal
