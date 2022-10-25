@@ -77,7 +77,10 @@ def signal_sampling(df,added_signals):
     with S:
         sampling_checkbox       = st.checkbox("Show Sampling Points", key='2004')
 
-    sample_freq = st.sidebar.slider(label='Sampling Frequency (Hz)', min_value=1, max_value=100, step=1)
+    if sampling_checkbox or interpolation_checkbox:
+        sample_freq = st.sidebar.slider(label= "Sampling Frequency (Hz)",min_value=1,max_value=100,value=1,step=1)
+    else:
+        sample_freq = 1
 
     list_of_columns = df.columns
     df_x_axis = list(df[list_of_columns[0]])

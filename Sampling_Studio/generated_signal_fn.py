@@ -89,7 +89,11 @@ def Sampling_added_signals(total_signals):
     with S:
         sampling                = st.checkbox('Show Sampling Points' ,key="sampling Check Box 13")
     
-    sampling_frequency = st.sidebar.slider(label= "Sampling Frequency (Hz)",min_value=1,max_value=100,value=1,step=1)
+    if sampling or interpolation_check_box:
+        sampling_frequency = st.sidebar.slider(label= "Sampling Frequency (Hz)",min_value=1,max_value=100,value=1,step=1)
+    else:
+        sampling_frequency=1
+        
     sample_rate = int((1000/2)/(sampling_frequency))
     time_axis = linspace(0, 2, 1000)
     sampled_time_axis= time_axis[::sample_rate]
