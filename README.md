@@ -21,20 +21,17 @@ It is a web application that illustrates the signal sampling and recovery showin
 
 ## Demo
 
+https://user-images.githubusercontent.com/61360429/197367405-60b82fde-e997-45fc-92c9-4292bd8be9f6.mp4
 
 
 
-https://user-images.githubusercontent.com/61360429/198086973-8437c36c-abdc-4ada-9f62-ea8c9446cfa1.mp4
+https://user-images.githubusercontent.com/61360429/197367387-65562de9-253f-40a2-9717-e1f2c3685507.mp4
 
-
-
-
-https://user-images.githubusercontent.com/61360429/198087083-30a0457a-40c9-4de1-82a3-1a6c31bc0ee2.mp4
-
+2-6e761ee4-3873-4551-a4ec-b4f255168a05.mp4
 
 
 ## Screenshots
-![ss1](https://user-images.githubusercontent.com/61360429/198086534-caee7de1-1dd5-4df0-93ff-283e36021288.png)
-![ss2](https://user-images.githubusercontent.com/61360429/198086537-9a58b7fd-f55e-4225-b9af-33cadac91015.png)
-![ss3](https://user-images.githubusercontent.com/61360429/198086555-1e2bd01b-3e4d-4434-b5a9-ae51c8882b1d.png)
-
+![screen4](https://user-images.githubusercontent.com/61360429/197367622-d0f592d3-2cab-4b6c-9d3c-f7705df83abe.png)
+![screen5](https://user-images.githubusercontent.com/61360429/197367624-021add6f-72c6-4ab1-806b-6173dacaea23.png)
+![screen2](https://user-images.githubusercontent.com/61360429/197367625-9d796e7c-32f0-4c8e-91cf-ec4e4feb49d3.png)
+![screen3](https://user-images.githubusercontent.com/61360429/197367626-1071edc9-81ef-4c10-905c-22f67e070cb0.png)
