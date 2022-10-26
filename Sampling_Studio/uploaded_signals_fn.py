@@ -150,7 +150,7 @@ def signal_sampling(df,added_signals):
 # ------------------------------------------------------------------------------------Adding Noise to Signal
 def add_noise():
     global noise
-    SNR = st.sidebar.slider(label='SNR', min_value=0, max_value=50, value=0, step=1)
+    SNR = st.sidebar.slider(label='SNR', min_value=1, max_value=50, value=1, step=1)
     signal_power = total_signals **2                                    # Generating the signal power
     signal_power_avg = mean(signal_power)                               # mean of signal power
     if (SNR==0):
