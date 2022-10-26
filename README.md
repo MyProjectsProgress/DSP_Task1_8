@@ -24,11 +24,12 @@ It is a web application that illustrates the signal sampling and recovery showin
 
 
 
-https://user-images.githubusercontent.com/61360429/198086687-cbf040dd-af16-435e-97c3-a6dba587053d.mp4
+https://user-images.githubusercontent.com/61360429/198086973-8437c36c-abdc-4ada-9f62-ea8c9446cfa1.mp4
 
 
 
-https://user-images.githubusercontent.com/61360429/198086753-7106655e-e8e2-432d-8421-40ba2d694acd.mp4
+
+https://user-images.githubusercontent.com/61360429/198087083-30a0457a-40c9-4de1-82a3-1a6c31bc0ee2.mp4
 
 
 
