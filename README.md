@@ -1,7 +1,7 @@
 # Sampling Studio
 
 ## Description
-It is a web application that illustrates the signal sampling and recovery showing the importance and validation of the Nyquist rate.
+It is a web application that illustrates the signal sampling and it's recovery showing the importance and validation of the Nyquist rate.
 
 ## Features
 - Sample & Recover: Allow the user to load a mid-length signal (Limit 200MB per file • CSV), visualize and sample it via different frequencies, then use the sampled points to recover the original signal using Whittaker–Shannon interpolation formula.
@@ -17,7 +17,19 @@ It is a web application that illustrates the signal sampling and recovery showin
 ## Technology Used
 - Python "Streamlit"
 - Html
-- CSS5 
+- CSS5
+
+## Made by:
+
+  |Name                            |Section |BN|
+  |--------------------------------|--------|--|
+  | Ahmed Emad El deen Ahmed Kwaiz |   1    |6 |
+  | Gamal hussam Gamal El deen     |   1    |24|
+  |  Magdy Mohammed El Sayed Nasr  |   2    |15|
+  | Mariam Monir AbdelRahim        |   2    |35|
+
+- Course Name : Digital Signal Processing
+- Under Supervision Dr.Tamer Basha
 
 ## Demo
 
