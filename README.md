@@ -20,8 +20,6 @@ It is a web application that illustrates the signal sampling and it's recovery s
 - CSS5
 
 ## Made by:
-
-  - Course Name : Digital Signal Processing
  
   |Name                            |Section |BN|
   |--------------------------------|--------|--|
@@ -30,7 +28,8 @@ It is a web application that illustrates the signal sampling and it's recovery s
   |  Magdy Mohammed El Sayed Nasr  |   2    |15|
   | Mariam Monir AbdelRahim        |   2    |35|
   
-  - Under Supervision Dr.Tamer Basha
+  - Course Name : Digital Signal Processing .
+  - Under Supervision Dr.Tamer Basha .
   
 ## Demo
 
