@@ -29,7 +29,7 @@ It is a web application that illustrates the signal sampling and it's recovery s
   | Mariam Monir AbdelRahim        |   2    |35|
   
   - Course Name : Digital Signal Processing .
-  - Under Supervision Dr.Tamer Basha .
+  - Under Supervision Dr.Tamer of Basha .
   
 ## Demo
 
