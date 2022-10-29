@@ -1,7 +1,7 @@
 # Sampling Studio
 
 ## Description
-It is a web application that illustrates the signal sampling and it's recovery showing the importance and validation of the Nyquist rate.
+ A web application that illustrates the signal sampling and it's recovery showing the importance and validation of the Nyquist rate.
 
 ## Features
 - Sample & Recover: Allow the user to load a mid-length signal (Limit 200MB per file • CSV), visualize and sample it via different frequencies, then use the sampled points to recover the original signal using Whittaker–Shannon interpolation formula.
