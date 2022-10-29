@@ -22,7 +22,6 @@ It is a web application that illustrates the signal sampling and it's recovery s
 ## Made by:
 
   - Course Name : Digital Signal Processing
-  - Under Supervision Dr.Tamer Basha
  
   |Name                            |Section |BN|
   |--------------------------------|--------|--|
@@ -30,8 +29,9 @@ It is a web application that illustrates the signal sampling and it's recovery s
   | Gamal hussam Gamal El deen     |   1    |24|
   |  Magdy Mohammed El Sayed Nasr  |   2    |15|
   | Mariam Monir AbdelRahim        |   2    |35|
-
-
+  
+  - Under Supervision Dr.Tamer Basha
+  
 ## Demo
 
 https://user-images.githubusercontent.com/61360429/197367405-60b82fde-e997-45fc-92c9-4292bd8be9f6.mp4
