@@ -32,7 +32,6 @@ https://user-images.githubusercontent.com/61360429/197367387-65562de9-253f-40a2-
 
 ## Screenshots
 
-![screen4](https://drive.google.com/file/d/1kq88pG2EPI6HcNYcoRwNfc5M4ntMq9KK/view?usp=share_link)
 ![screen5](https://user-images.githubusercontent.com/61360429/197367624-021add6f-72c6-4ab1-806b-6173dacaea23.png)
 ![screen2](https://user-images.githubusercontent.com/61360429/197367625-9d796e7c-32f0-4c8e-91cf-ec4e4feb49d3.png)
 ![screen3](https://user-images.githubusercontent.com/61360429/197367626-1071edc9-81ef-4c10-905c-22f67e070cb0.png)
